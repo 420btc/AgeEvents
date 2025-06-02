@@ -129,7 +129,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-background p-4 md:p-8">
       <header className="max-w-6xl mx-auto mb-8 flex justify-between items-center">
-        <h1 className="text-2xl md:text-3xl font-semibold text-foreground">
+        <h1 className="text-2xl md:text-6xl font-semibold text-foreground spicy-rice-regular">
           Age Events AI
         </h1>
         <div className="flex items-center gap-2">
