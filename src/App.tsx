@@ -11,6 +11,7 @@ import { ApiKeyForm } from "./components/api-key-form";
 import { UserData, HistoricalEvent } from "./types/types";
 import { generateMockEvents } from "./data/mock-events";
 import { AIService, AIProvider } from "./services/ai-service";
+import globaleImage from "./images/globale.png";
 
 const App: React.FC = () => {
   const [userData, setUserData] = React.useState<UserData | null>(null);
@@ -119,7 +120,7 @@ const App: React.FC = () => {
       
       if (newEvents.length > 0) {
         // Filter out any events that might still be duplicates based on title similarity
-        const filteredNewEvents = newEvents.filter(newEvent => 
+        const filteredNewEvents = newEvents.filter((newEvent: HistoricalEvent) => 
           !events.some(existingEvent => 
             existingEvent.title.toLowerCase().trim() === newEvent.title.toLowerCase().trim()
           )
@@ -198,7 +199,7 @@ const App: React.FC = () => {
                   <div>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
                       <div className="flex items-center gap-2">
-                        <img src="/src/images/globale.png" alt="Globale" className="h-20 w-auto" />
+                        <img src={globaleImage} alt="Globale" className="h-20 w-auto" />
                       </div>
                       <div className="flex flex-wrap gap-2 min-w-0">
                         <span className="px-4 py-1.5 text-sm font-bold bg-green-600 text-white rounded-full shadow-md border border-green-700 whitespace-nowrap">
