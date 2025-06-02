@@ -54,11 +54,11 @@ export const EventCard: React.FC<EventCardProps> = ({
   };
 
   return (
-    <Card className={`mb-4 overflow-visible ${event.isAIGenerated ? 'ring-2 ring-blue-400 ring-opacity-60' : ''}`}>
+    <Card className={`mb-4 overflow-hidden ${event.isAIGenerated ? 'ring-2 ring-blue-400 ring-opacity-60' : ''}`}>
       <CardBody className="p-4">
-        <div className="flex justify-between items-start">
-          <div className="flex items-start gap-3">
-            <div className="min-w-[90px] h-[70px] flex flex-col items-center justify-center bg-primary-100 rounded-md p-1">
+        <div className="flex justify-between items-start overflow-hidden">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
+            <div className="min-w-[90px] max-w-[90px] h-[70px] flex flex-col items-center justify-center bg-primary-100 rounded-md p-1 flex-shrink-0">
               {ageData ? (
                 ageData.years === 0 && ageInDays !== undefined ? (
                   <>
@@ -97,19 +97,19 @@ export const EventCard: React.FC<EventCardProps> = ({
               )}
             </div>
             
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h4 className="font-medium">{event.title}</h4>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h4 className="font-medium flex-1 min-w-0">{event.title}</h4>
                 {event.isAIGenerated && (
-                  <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                  <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full flex-shrink-0">
                     IA
                   </span>
                 )}
               </div>
               <div className="flex flex-wrap gap-2 items-center text-sm text-foreground-500 mt-1">
-                <span>{event.date.toLocaleDateString()}</span>
-                <span className="w-1 h-1 rounded-full bg-foreground-400"></span>
-                <span className="flex items-center">
+                <span className="whitespace-nowrap">{event.date.toLocaleDateString()}</span>
+                <span className="w-1 h-1 rounded-full bg-foreground-400 flex-shrink-0"></span>
+                <span className="flex items-center whitespace-nowrap">
                   <Icon 
                     icon={
                       event.category === 'Tecnología' ? 'lucide:cpu' : 
@@ -118,7 +118,7 @@ export const EventCard: React.FC<EventCardProps> = ({
                       event.category === 'Cultura' ? 'lucide:music' : 
                       'lucide:globe'
                     } 
-                    className="mr-1 text-sm" 
+                    className="mr-1 text-sm flex-shrink-0" 
                   />
                   {event.category}
                 </span>
@@ -126,7 +126,7 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
           </div>
           
-          <div className="flex gap-1">
+          <div className="flex gap-1 flex-shrink-0">
             {event.location && (
               <Tooltip content={`Ubicación: ${event.location}`}>
                 <Button
@@ -134,6 +134,7 @@ export const EventCard: React.FC<EventCardProps> = ({
                   variant="light"
                   size="sm"
                   aria-label="Ver ubicación"
+                  className="flex-shrink-0"
                 >
                   <Icon icon="lucide:map-pin" className="text-foreground-500" />
                 </Button>
@@ -146,6 +147,7 @@ export const EventCard: React.FC<EventCardProps> = ({
               size="sm"
               onPress={onToggleExpand}
               aria-label={isExpanded ? "Colapsar" : "Expandir"}
+              className="flex-shrink-0"
             >
               <Icon 
                 icon={isExpanded ? "lucide:chevron-up" : "lucide:chevron-down"} 
