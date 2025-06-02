@@ -1079,6 +1079,114 @@ export const generateMockEvents = (birthDate: Date): HistoricalEvent[] => {
         category: "Salud",
         location: "Boston, EE.UU.",
         impact: "Revolución en la cirugía y medicina."
+    },
+    {
+        id: "event-121",
+        title: "Huracán Katrina",
+        description: "Devastador huracán categoría 5 que azotó Nueva Orleans y la costa del Golfo.",
+        date: new Date(2005, 7, 29), // Mes 7 es Agosto
+        category: "Desastres Naturales",
+        location: "Nueva Orleans, Louisiana, EE.UU.",
+        impact: "Más de 1,800 muertes y daños por $125 mil millones, exposición de desigualdades sociales."
+    },
+    {
+        id: "event-122",
+        title: "Terremoto de Haití",
+        description: "Terremoto de magnitud 7.0 devasta Puerto Príncipe y áreas circundantes.",
+        date: new Date(2010, 0, 12), // Mes 0 es Enero
+        category: "Desastres Naturales",
+        location: "Haití",
+        impact: "Más de 200,000 muertes, crisis humanitaria masiva y reconstrucción prolongada."
+    },
+    {
+        id: "event-123",
+        title: "Inundaciones de Pakistán",
+        description: "Inundaciones masivas afectan a un quinto del territorio pakistaní.",
+        date: new Date(2010, 6, 29), // Mes 6 es Julio
+        category: "Desastres Naturales",
+        location: "Pakistán",
+        impact: "20 millones de afectados, 2,000 muertes y destrucción de infraestructura."
+    },
+    {
+        id: "event-124",
+        title: "Huracán Sandy",
+        description: "Supertormenta híbrida que impacta la costa este de Estados Unidos.",
+        date: new Date(2012, 9, 29), // Mes 9 es Octubre
+        category: "Desastres Naturales",
+        location: "Costa Este de EE.UU. y Caribe",
+        impact: "233 muertes, $70 mil millones en daños, apagones masivos en Nueva York."
+    },
+    {
+        id: "event-125",
+        title: "Tifón Haiyan (Yolanda)",
+        description: "Uno de los tifones más intensos registrados azota Filipinas.",
+        date: new Date(2013, 10, 8), // Mes 10 es Noviembre
+        category: "Desastres Naturales",
+        location: "Filipinas",
+        impact: "6,300 muertes, 4 millones de desplazados, devastación en Tacloban."
+    },
+    {
+        id: "event-126",
+        title: "Terremoto de Nepal",
+        description: "Terremoto de magnitud 7.8 sacude Nepal y regiones vecinas.",
+        date: new Date(2015, 3, 25), // Mes 3 es Abril
+        category: "Desastres Naturales",
+        location: "Nepal",
+        impact: "9,000 muertes, patrimonio histórico destruido, crisis humanitaria."
+    },
+    {
+        id: "event-127",
+        title: "Incendios forestales de California",
+        description: "Serie de incendios devastadores arrasan California, incluyendo Camp Fire.",
+        date: new Date(2018, 10, 8), // Mes 10 es Noviembre
+        category: "Desastres Naturales",
+        location: "California, EE.UU.",
+        impact: "85 muertes, ciudad de Paradise destruida, $16.5 mil millones en daños."
+    },
+    {
+        id: "event-128",
+        title: "Ciclón Idai",
+        description: "Devastador ciclón tropical impacta Mozambique, Zimbabue y Malaui.",
+        date: new Date(2019, 2, 14), // Mes 2 es Marzo
+        category: "Desastres Naturales",
+        location: "África Oriental (Mozambique, Zimbabue, Malaui)",
+        impact: "1,300 muertes, 3 millones de afectados, destrucción de cultivos."
+    },
+    {
+        id: "event-129",
+        title: "Inundaciones de Europa Central",
+        description: "Inundaciones catastróficas afectan Alemania, Bélgica y Países Bajos.",
+        date: new Date(2021, 6, 14), // Mes 6 es Julio
+        category: "Desastres Naturales",
+        location: "Europa Central (Alemania, Bélgica, Países Bajos)",
+        impact: "220 muertes, miles de desaparecidos, infraestructura devastada."
+    },
+    {
+        id: "event-130",
+        title: "Ola de calor del Pacífico Noroeste",
+        description: "Ola de calor extrema rompe récords de temperatura en Canadá y EE.UU.",
+        date: new Date(2021, 5, 25), // Mes 5 es Junio
+        category: "Desastres Naturales",
+        location: "Pacífico Noroeste (Canadá y EE.UU.)",
+        impact: "Más de 600 muertes, temperaturas récord de 49.6°C, incendios forestales."
+    },
+    {
+        id: "event-131",
+        title: "Huracán Ian",
+        description: "Huracán categoría 4 devasta Florida con vientos de 240 km/h.",
+        date: new Date(2022, 8, 28), // Mes 8 es Septiembre
+        category: "Desastres Naturales",
+        location: "Florida, EE.UU.",
+        impact: "150 muertes, $113 mil millones en daños, uno de los huracanes más costosos."
+    },
+    {
+        id: "event-132",
+        title: "Inundaciones de Pakistán 2022",
+        description: "Inundaciones monzónicas extremas sumergen un tercio de Pakistán.",
+        date: new Date(2022, 5, 14), // Mes 5 es Junio
+        category: "Desastres Naturales",
+        location: "Pakistán",
+        impact: "1,700 muertes, 33 millones de afectados, pérdidas de $30 mil millones."
     }
   ];
 
