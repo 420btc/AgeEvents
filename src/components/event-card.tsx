@@ -63,7 +63,7 @@ export const EventCard: React.FC<EventCardProps> = ({
                 <h4 className="font-medium">{event.title}</h4>
                 {event.isAIGenerated && (
                   <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                    Generada por IA
+                    IA
                   </span>
                 )}
               </div>
