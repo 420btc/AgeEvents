@@ -50,6 +50,11 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ userData, events, ai
     return age;
   };
 
+  const calculateAgeInDays = (eventDate: Date) => {
+    const timeDiff = eventDate.getTime() - userData.birthDate.getTime();
+    return Math.floor(timeDiff / (1000 * 3600 * 24));
+  };
+
   // Group events by decade
   const eventsByDecade: Record<string, HistoricalEvent[]> = {};
   events.forEach(event => {
@@ -104,6 +109,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ userData, events, ai
                         <EventCard 
                           event={event} 
                           age={age}
+                          ageInDays={calculateAgeInDays(event.date)}
                           isExpanded={isExpanded}
                           onToggleExpand={() => handleToggleExpand(event.id)}
                           aiService={aiService}

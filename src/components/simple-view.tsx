@@ -43,6 +43,11 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
     return age;
   };
 
+  const calculateAgeInDays = (eventDate: Date) => {
+    const timeDiff = eventDate.getTime() - userData.birthDate.getTime();
+    return Math.floor(timeDiff / (1000 * 3600 * 24));
+  };
+
   // Sort events by date
   const sortedEvents = [...events].sort((a, b) => a.date.getTime() - b.date.getTime());
 
@@ -58,6 +63,7 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
           <div className="space-y-4">
             {sortedEvents.map((event, index) => {
               const age = calculateAge(event.date);
+              const ageInDays = calculateAgeInDays(event.date);
               const isExpanded = expandedEvent === event.id;
               
               return (
@@ -69,8 +75,17 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
                 >
                   <div className="flex items-start gap-4 p-4 rounded-md bg-content2 hover:bg-content3 transition-colors">
                     <div className="min-w-[60px] text-center">
-                      <span className="text-lg font-semibold text-primary">{age}</span>
-                      <p className="text-xs text-foreground-500">años</p>
+                      {age === 0 ? (
+                        <>
+                          <span className="text-lg font-semibold text-primary">{ageInDays}</span>
+                          <p className="text-xs text-foreground-500">días</p>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-lg font-semibold text-primary">{age}</span>
+                          <p className="text-xs text-foreground-500">años</p>
+                        </>
+                      )}
                     </div>
                     
                     <div className="flex-1">

@@ -60,6 +60,11 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
     return age;
   };
 
+  const calculateAgeInDays = (eventDate: Date) => {
+    const timeDiff = eventDate.getTime() - userData.birthDate.getTime();
+    return Math.floor(timeDiff / (1000 * 3600 * 24));
+  };
+
   // Prepare data for the chart
   const chartData = events.map(event => {
     const age = calculateAge(event.date);
@@ -121,7 +126,7 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
       return (
         <div className="bg-content1 p-3 rounded-md shadow-md border border-divider">
           <p className="font-medium">{data.year}</p>
-          <p className="text-foreground-500">Edad: {data.age} años</p>
+          <p className="text-foreground-500">Edad: {data.age === 0 ? `${calculateAgeInDays(data.event.date)} días` : `${data.age} años`}</p>
           <p className="text-sm text-primary">{data.event.title}</p>
         </div>
       );
@@ -200,6 +205,7 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
           <EventCard 
             event={selectedEvent} 
             age={calculateAge(selectedEvent.date)}
+        ageInDays={calculateAgeInDays(selectedEvent.date)}
             isExpanded={expandedEvent === selectedEvent.id}
             onToggleExpand={() => handleToggleExpand(selectedEvent.id)}
             aiService={aiService}

@@ -8,6 +8,7 @@ import { AIService } from "../services/ai-service";
 interface EventCardProps {
   event: HistoricalEvent;
   age: number;
+  ageInDays?: number;
   isExpanded: boolean;
   onToggleExpand: () => void;
   aiService?: AIService;
@@ -16,6 +17,7 @@ interface EventCardProps {
 export const EventCard: React.FC<EventCardProps> = ({ 
   event, 
   age, 
+  ageInDays,
   isExpanded, 
   onToggleExpand,
   aiService
@@ -54,8 +56,17 @@ export const EventCard: React.FC<EventCardProps> = ({
         <div className="flex justify-between items-start">
           <div className="flex items-start gap-3">
             <div className="min-w-[50px] h-[50px] flex flex-col items-center justify-center bg-primary-100 rounded-md">
-              <span className="text-lg font-semibold text-primary-600">{age}</span>
-              <span className="text-xs text-primary-600">años</span>
+              {age === 0 && ageInDays !== undefined ? (
+                <>
+                  <span className="text-lg font-semibold text-primary-600">{ageInDays}</span>
+                  <span className="text-xs text-primary-600">días</span>
+                </>
+              ) : (
+                <>
+                  <span className="text-lg font-semibold text-primary-600">{age}</span>
+                  <span className="text-xs text-primary-600">años</span>
+                </>
+              )}
             </div>
             
             <div>
