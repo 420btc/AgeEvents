@@ -36,6 +36,7 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
   const [birthLocation, setBirthLocation] = React.useState<string>("");
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string>("");
+  const [showLocationField, setShowLocationField] = React.useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,21 +98,45 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
           />
         </I18nProvider>
 
-        <Input
-          label="Lugar de nacimiento (opcional)"
-          placeholder="Ciudad, País"
-          value={birthLocation}
-          onValueChange={setBirthLocation}
+        <Checkbox
+          isSelected={showLocationField}
+          onValueChange={setShowLocationField}
           isDisabled={isLoading}
           classNames={{
-            label: "text-base md:text-sm",
-            input: "text-base md:text-sm",
-            inputWrapper: "text-base md:text-sm"
+            base: "inline-flex max-w-full w-full bg-content1 m-0 hover:bg-content2 items-center justify-start cursor-pointer rounded-lg gap-2 p-3 border-2 border-transparent data-[selected=true]:border-primary",
+            label: "w-full"
           }}
-          startContent={
-            <Icon icon="lucide:map-pin" className="text-foreground-400 text-base md:text-sm" />
-          }
-        />
+        >
+          <div className="flex items-center gap-2">
+            <Icon icon="lucide:map-pin" className="text-foreground-500" />
+            <span className="text-sm md:text-xs">Añadir lugar de nacimiento (opcional)</span>
+          </div>
+        </Checkbox>
+
+        {showLocationField && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Input
+              label="Lugar de nacimiento"
+              placeholder="Ciudad, País"
+              value={birthLocation}
+              onValueChange={setBirthLocation}
+              isDisabled={isLoading}
+              classNames={{
+                label: "text-base md:text-sm",
+                input: "text-base md:text-sm",
+                inputWrapper: "text-base md:text-sm"
+              }}
+              startContent={
+                <Icon icon="lucide:map-pin" className="text-foreground-400 text-base md:text-sm" />
+              }
+            />
+          </motion.div>
+        )}
 
         <div className="space-y-3">
           <label className="text-sm font-medium text-foreground">
