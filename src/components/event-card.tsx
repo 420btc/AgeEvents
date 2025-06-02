@@ -8,7 +8,8 @@ import { MapboxMap } from "./mapbox-map";
 
 interface EventCardProps {
   event: HistoricalEvent;
-  age: number;
+  ageData?: { years: number, months: number };
+  age?: number;
   ageInDays?: number;
   isExpanded: boolean;
   onToggleExpand: () => void;
@@ -17,6 +18,7 @@ interface EventCardProps {
 
 export const EventCard: React.FC<EventCardProps> = ({ 
   event, 
+  ageData,
   age, 
   ageInDays,
   isExpanded, 
@@ -56,17 +58,42 @@ export const EventCard: React.FC<EventCardProps> = ({
       <CardBody className="p-4">
         <div className="flex justify-between items-start">
           <div className="flex items-start gap-3">
-            <div className="min-w-[50px] h-[50px] flex flex-col items-center justify-center bg-primary-100 rounded-md">
-              {age === 0 && ageInDays !== undefined ? (
-                <>
-                  <span className="text-lg font-semibold text-primary-600">{ageInDays}</span>
-                  <span className="text-xs text-primary-600">días</span>
-                </>
+            <div className="min-w-[90px] h-[70px] flex flex-col items-center justify-center bg-primary-100 rounded-md p-1">
+              {ageData ? (
+                ageData.years === 0 && ageInDays !== undefined ? (
+                  <>
+                    <span className="text-lg font-bold text-primary-600">{ageInDays}</span>
+                    <span className="text-xs text-primary-600 -mt-1">días</span>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-center">
+                      <span className="text-lg font-bold text-primary-600">{ageData.years}</span>
+                      <span className="text-xs text-primary-600 ml-1">años</span>
+                    </div>
+                    {ageData.months > 0 && (
+                      <div className="text-center -mt-1">
+                        <span className="text-sm font-semibold text-primary-500">{ageData.months}</span>
+                        <span className="text-xs text-primary-500 ml-1">meses</span>
+                      </div>
+                    )}
+                  </>
+                )
               ) : (
-                <>
-                  <span className="text-lg font-semibold text-primary-600">{age}</span>
-                  <span className="text-xs text-primary-600">años</span>
-                </>
+                // Fallback para compatibilidad con age
+                (age !== undefined && age < 1 && ageInDays !== undefined) ? (
+                  <>
+                    <span className="text-lg font-bold text-primary-600">{ageInDays}</span>
+                    <span className="text-xs text-primary-600 -mt-1">días</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-lg font-bold text-primary-600">
+                      {age !== undefined ? (Number.isInteger(age) ? age : age.toFixed(1)) : 0}
+                    </span>
+                    <span className="text-xs text-primary-600 -mt-1">años</span>
+                  </>
+                )
               )}
             </div>
             

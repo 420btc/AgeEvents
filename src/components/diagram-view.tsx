@@ -41,23 +41,22 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
     );
   }
 
-  const calculateAge = (eventDate: Date) => {
-    const birthYear = userData.birthDate.getFullYear();
-    const eventYear = eventDate.getFullYear();
+  const calculateAge = (eventDate: Date): { years: number, months: number } => {
+    const birth = userData.birthDate;
     
-    let age = eventYear - birthYear;
+    let years = eventDate.getFullYear() - birth.getFullYear();
+    let months = eventDate.getMonth() - birth.getMonth();
     
-    // Check if birthday has occurred this year
-    const birthMonth = userData.birthDate.getMonth();
-    const eventMonth = eventDate.getMonth();
-    const birthDay = userData.birthDate.getDate();
-    const eventDay = eventDate.getDate();
-    
-    if (eventMonth < birthMonth || (eventMonth === birthMonth && eventDay < birthDay)) {
-      age--;
+    if (eventDate.getDate() < birth.getDate()) {
+      months--;
     }
     
-    return age;
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    
+    return { years: Math.max(0, years), months: Math.max(0, months) };
   };
 
   const calculateAgeInDays = (eventDate: Date) => {
@@ -67,10 +66,12 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
 
   // Prepare data for the chart
   const chartData = events.map(event => {
-    const age = calculateAge(event.date);
+    const ageData = calculateAge(event.date);
+    const ageInYears = ageData.years + (ageData.months / 12);
     return {
       year: event.date.getFullYear(),
-      age,
+      age: parseFloat(ageInYears.toFixed(2)),
+      ageData,
       event,
       isAIGenerated: event.isAIGenerated || false
     };
@@ -120,14 +121,29 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
   chartData.sort((a, b) => a.year - b.year);
 
   // Custom tooltip for the chart
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      const formatAge = (ageData: { years: number, months: number }) => {
+        if (ageData.years === 0) {
+          return `${calculateAgeInDays(data.event.date)} días`;
+        }
+        if (ageData.months === 0) {
+          return `${ageData.years} año${ageData.years !== 1 ? 's' : ''}`;
+        }
+        return `${ageData.years} año${ageData.years !== 1 ? 's' : ''} y ${ageData.months} mes${ageData.months !== 1 ? 'es' : ''}`;
+      };
+      
       return (
-        <div className="bg-content1 p-3 rounded-md shadow-md border border-divider">
-          <p className="font-medium">{data.year}</p>
-          <p className="text-foreground-500">Edad: {data.age === 0 ? `${calculateAgeInDays(data.event.date)} días` : `${data.age} años`}</p>
-          <p className="text-sm text-primary">{data.event.title}</p>
+        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
+          <p className="font-semibold">{data.event.title}</p>
+          <p className="text-sm text-gray-600">{label}</p>
+          <p className="text-sm">
+            Edad: {formatAge(data.ageData)}
+          </p>
+          {data.event.description && (
+            <p className="text-sm text-gray-500 mt-1">{data.event.description}</p>
+          )}
         </div>
       );
     }
@@ -204,8 +220,8 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
         >
           <EventCard 
             event={selectedEvent} 
-            age={calculateAge(selectedEvent.date)}
-        ageInDays={calculateAgeInDays(selectedEvent.date)}
+            ageData={calculateAge(selectedEvent.date)}
+            ageInDays={calculateAgeInDays(selectedEvent.date)}
             isExpanded={expandedEvent === selectedEvent.id}
             onToggleExpand={() => handleToggleExpand(selectedEvent.id)}
             aiService={aiService}

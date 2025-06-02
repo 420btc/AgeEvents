@@ -34,21 +34,31 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ userData, events, ai
   const calculateAge = (eventDate: Date) => {
     const birthYear = userData.birthDate.getFullYear();
     const eventYear = eventDate.getFullYear();
-    
-    let age = eventYear - birthYear;
-    
-    // Check if birthday has occurred this year
     const birthMonth = userData.birthDate.getMonth();
     const eventMonth = eventDate.getMonth();
     const birthDay = userData.birthDate.getDate();
     const eventDay = eventDate.getDate();
     
-    if (eventMonth < birthMonth || (eventMonth === birthMonth && eventDay < birthDay)) {
-      age--;
+    let age = eventYear - birthYear;
+    
+    // Calculate months difference
+    let monthsDiff = eventMonth - birthMonth;
+    
+    // Adjust if the day hasn't occurred yet in the current month
+    if (eventDay < birthDay) {
+      monthsDiff--;
     }
     
-    return age;
+    // Adjust age if birthday hasn't occurred this year
+    if (monthsDiff < 0) {
+      age--;
+      monthsDiff += 12;
+    }
+    
+    return { years: age, months: monthsDiff };
   };
+
+
 
   const calculateAgeInDays = (eventDate: Date) => {
     const timeDiff = eventDate.getTime() - userData.birthDate.getTime();
@@ -90,7 +100,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ userData, events, ai
                 </h3>
                 <div className="space-y-4 pl-6 border-l-2 border-primary-100">
                   {decadeEvents.map((event, index) => {
-                    const age = calculateAge(event.date);
+                    const ageData = calculateAge(event.date);
                     const isExpanded = expandedEvent === event.id;
                     
                     return (
@@ -108,7 +118,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ userData, events, ai
                         }`}></div>
                         <EventCard 
                           event={event} 
-                          age={age}
+                          ageData={ageData}
                           ageInDays={calculateAgeInDays(event.date)}
                           isExpanded={isExpanded}
                           onToggleExpand={() => handleToggleExpand(event.id)}

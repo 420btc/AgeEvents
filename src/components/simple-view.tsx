@@ -35,23 +35,22 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
     );
   }
 
-  const calculateAge = (eventDate: Date) => {
-    const birthYear = userData.birthDate.getFullYear();
-    const eventYear = eventDate.getFullYear();
+  const calculateAge = (eventDate: Date): { years: number, months: number } => {
+    const birth = userData.birthDate;
     
-    let age = eventYear - birthYear;
+    let years = eventDate.getFullYear() - birth.getFullYear();
+    let months = eventDate.getMonth() - birth.getMonth();
     
-    // Check if birthday has occurred this year
-    const birthMonth = userData.birthDate.getMonth();
-    const eventMonth = eventDate.getMonth();
-    const birthDay = userData.birthDate.getDate();
-    const eventDay = eventDate.getDate();
-    
-    if (eventMonth < birthMonth || (eventMonth === birthMonth && eventDay < birthDay)) {
-      age--;
+    if (eventDate.getDate() < birth.getDate()) {
+      months--;
     }
     
-    return age;
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    
+    return { years: Math.max(0, years), months: Math.max(0, months) };
   };
 
   // Prepare data for category distribution (Pie Chart)
@@ -68,9 +67,11 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
     }));
   }, [events]);
 
+
+
   // Prepare data for age distribution (Bar Chart)
   const ageData = React.useMemo(() => {
-    const ageGroups: { [key: string]: number } = {
+    const ageGroups = {
       '0-5 años': 0,
       '6-12 años': 0,
       '13-18 años': 0,
@@ -81,13 +82,14 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
     };
     
     events.forEach(event => {
-      const age = calculateAge(event.date);
-      if (age <= 5) ageGroups['0-5 años']++;
-      else if (age <= 12) ageGroups['6-12 años']++;
-      else if (age <= 18) ageGroups['13-18 años']++;
-      else if (age <= 25) ageGroups['19-25 años']++;
-      else if (age <= 35) ageGroups['26-35 años']++;
-      else if (age <= 50) ageGroups['36-50 años']++;
+      const ageData = calculateAge(event.date);
+      const ageInYears = ageData.years + (ageData.months / 12);
+      if (ageInYears <= 5) ageGroups['0-5 años']++;
+      else if (ageInYears <= 12) ageGroups['6-12 años']++;
+      else if (ageInYears <= 18) ageGroups['13-18 años']++;
+      else if (ageInYears <= 25) ageGroups['19-25 años']++;
+      else if (ageInYears <= 35) ageGroups['26-35 años']++;
+      else if (ageInYears <= 50) ageGroups['36-50 años']++;
       else ageGroups['51+ años']++;
     });
     
