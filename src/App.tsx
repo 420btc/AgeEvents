@@ -113,7 +113,7 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-background p-4 md:p-8">
       <header className="max-w-6xl mx-auto mb-8 flex justify-between items-center">
         <h1 className="text-2xl md:text-3xl font-semibold text-foreground">
-          Escáner Cronológico Personal
+          Age Events AI
         </h1>
         <div className="flex items-center gap-2">
           <ApiKeyForm 
@@ -152,7 +152,20 @@ const App: React.FC = () => {
               <CardBody className="p-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
-                    <h2 className="text-xl font-medium">Tu Cronología Personal</h2>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h2 className="text-xl font-medium">Tu Cronología Personal</h2>
+                      <div className="flex gap-2">
+                        <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                          Locales: {filteredEvents.filter(event => !event.isAIGenerated).length}
+                        </span>
+                        <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                          IA: {filteredEvents.filter(event => event.isAIGenerated).length}
+                        </span>
+                        <span className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
+                          Total: {filteredEvents.length}
+                        </span>
+                      </div>
+                    </div>
                     <p className="text-foreground-500 text-sm">
                       Fecha de nacimiento: {userData.birthDate.toLocaleDateString()}
                       {userData.birthLocation && ` • ${userData.birthLocation}`}
@@ -209,7 +222,7 @@ const App: React.FC = () => {
       </main>
 
       <footer className="max-w-6xl mx-auto mt-12 py-4 border-t border-divider text-center text-foreground-500 text-sm">
-        © {new Date().getFullYear()} Escáner Cronológico Personal • Todos los derechos reservados
+        © {new Date().getFullYear()} Age Events AI • Todos los derechos reservados
       </footer>
     </div>
   );

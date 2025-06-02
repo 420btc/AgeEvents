@@ -499,6 +499,368 @@ export const generateMockEvents = (birthDate: Date): HistoricalEvent[] => {
         category: "Cultura",
         location: "Global",
         impact: "Impulsó la tecnología 3D en el cine y batió récords de taquilla."
+    },
+    // Eventos importantes 1940-1980
+    {
+        id: "event-76",
+        title: "Fin de la Segunda Guerra Mundial",
+        description: "Alemania y Japón se rinden, terminando la Segunda Guerra Mundial.",
+        date: new Date(1945, 8, 2), // Mes 8 es Septiembre
+        category: "Conflictos",
+        location: "Global",
+        impact: "Reconfiguración del orden mundial y inicio de la era nuclear."
+    },
+    {
+        id: "event-77",
+        title: "Creación de las Naciones Unidas",
+        description: "Se establece la ONU para mantener la paz mundial.",
+        date: new Date(1945, 9, 24), // Mes 9 es Octubre
+        category: "Política",
+        location: "San Francisco, EE.UU.",
+        impact: "Nueva arquitectura de cooperación internacional."
+    },
+    {
+        id: "event-78",
+        title: "Bombas atómicas de Hiroshima y Nagasaki",
+        description: "EE.UU. lanza las primeras bombas nucleares en guerra.",
+        date: new Date(1945, 7, 6), // Mes 7 es Agosto
+        category: "Conflictos",
+        location: "Hiroshima y Nagasaki, Japón",
+        impact: "Inicio de la era nuclear y cambio en la guerra moderna."
+    },
+    {
+        id: "event-79",
+        title: "Creación del Estado de Israel",
+        description: "Declaración de independencia del Estado de Israel.",
+        date: new Date(1948, 4, 14), // Mes 4 es Mayo
+        category: "Política",
+        location: "Palestina/Israel",
+        impact: "Reconfiguración geopolítica de Oriente Medio."
+    },
+    {
+        id: "event-80",
+        title: "Plan Marshall",
+        description: "EE.UU. lanza programa de ayuda para reconstruir Europa.",
+        date: new Date(1947, 5, 5), // Mes 5 es Junio
+        category: "Economía",
+        location: "Europa Occidental",
+        impact: "Reconstrucción europea y fortalecimiento de alianzas occidentales."
+    },
+    {
+        id: "event-81",
+        title: "Guerra de Corea",
+        description: "Conflicto entre Corea del Norte y del Sur con intervención internacional.",
+        date: new Date(1950, 5, 25), // Mes 5 es Junio
+        category: "Conflictos",
+        location: "Península de Corea",
+        impact: "Primera guerra 'caliente' de la Guerra Fría."
+    },
+    {
+        id: "event-82",
+        title: "Descubrimiento de la estructura del ADN",
+        description: "Watson, Crick, Franklin y Wilkins descubren la doble hélice del ADN.",
+        date: new Date(1953, 3, 25), // Mes 3 es Abril
+        category: "Ciencia",
+        location: "Cambridge, Reino Unido",
+        impact: "Revolución en biología molecular y medicina moderna."
+    },
+    {
+        id: "event-83",
+        title: "Muerte de Stalin",
+        description: "Fallece Iósif Stalin, líder de la Unión Soviética.",
+        date: new Date(1953, 2, 5), // Mes 2 es Marzo
+        category: "Política",
+        location: "Moscú, URSS",
+        impact: "Inicio de la desestalinización y cambios en la Guerra Fría."
+    },
+    {
+        id: "event-84",
+        title: "Lanzamiento del Sputnik",
+        description: "La URSS lanza el primer satélite artificial.",
+        date: new Date(1957, 9, 4), // Mes 9 es Octubre
+        category: "Ciencia",
+        location: "Kazajistán, URSS",
+        impact: "Inicio de la carrera espacial y la era espacial."
+    },
+    {
+        id: "event-85",
+        title: "Revolución Cubana",
+        description: "Fidel Castro toma el poder en Cuba.",
+        date: new Date(1959, 0, 1), // Mes 0 es Enero
+        category: "Política",
+        location: "La Habana, Cuba",
+        impact: "Establecimiento del primer estado socialista en América."
+    },
+    {
+        id: "event-86",
+        title: "Construcción del Muro de Berlín",
+        description: "Alemania Oriental construye el Muro de Berlín.",
+        date: new Date(1961, 7, 13), // Mes 7 es Agosto
+        category: "Política",
+        location: "Berlín, Alemania",
+        impact: "Símbolo físico de la división de la Guerra Fría."
+    },
+    {
+        id: "event-87",
+        title: "Crisis de los Misiles de Cuba",
+        description: "Confrontación nuclear entre EE.UU. y la URSS.",
+        date: new Date(1962, 9, 14), // Mes 9 es Octubre
+        category: "Conflictos",
+        location: "Cuba y global",
+        impact: "Momento más cercano a una guerra nuclear global."
+    },
+    {
+        id: "event-88",
+        title: "Asesinato de John F. Kennedy",
+        description: "El presidente estadounidense es asesinado en Dallas.",
+        date: new Date(1963, 10, 22), // Mes 10 es Noviembre
+        category: "Política",
+        location: "Dallas, Texas, EE.UU.",
+        impact: "Trauma nacional y cambio en la política estadounidense."
+    },
+    {
+        id: "event-89",
+        title: "Discurso 'I Have a Dream' de Martin Luther King",
+        description: "Histórico discurso por los derechos civiles en Washington.",
+        date: new Date(1963, 7, 28), // Mes 7 es Agosto
+        category: "Sociedad",
+        location: "Washington D.C., EE.UU.",
+        impact: "Momento cumbre del movimiento por los derechos civiles."
+    },
+    {
+        id: "event-90",
+        title: "Guerra de Vietnam (escalada estadounidense)",
+        description: "EE.UU. aumenta masivamente su intervención en Vietnam.",
+        date: new Date(1965, 2, 8), // Mes 2 es Marzo
+        category: "Conflictos",
+        location: "Vietnam",
+        impact: "Conflicto que dividió a la sociedad estadounidense."
+    },
+    {
+        id: "event-91",
+        title: "Mayo del 68 en Francia",
+        description: "Protestas estudiantiles y huelgas generales en Francia.",
+        date: new Date(1968, 4, 3), // Mes 4 es Mayo
+        category: "Sociedad",
+        location: "París, Francia",
+        impact: "Movimiento que inspiró protestas globales y cambio social."
+    },
+    {
+        id: "event-92",
+        title: "Festival de Woodstock",
+        description: "Icónico festival de música que definió la contracultura.",
+        date: new Date(1969, 7, 15), // Mes 7 es Agosto
+        category: "Cultura",
+        location: "Nueva York, EE.UU.",
+        impact: "Símbolo de la contracultura y la música rock."
+    },
+    {
+        id: "event-93",
+        title: "Primer trasplante de corazón",
+        description: "Christiaan Barnard realiza el primer trasplante cardíaco.",
+        date: new Date(1967, 11, 3), // Mes 11 es Diciembre
+        category: "Salud",
+        location: "Ciudad del Cabo, Sudáfrica",
+        impact: "Avance revolucionario en cirugía y medicina."
+    },
+    {
+        id: "event-94",
+        title: "Watergate y renuncia de Nixon",
+        description: "El escándalo Watergate lleva a la renuncia del presidente Nixon.",
+        date: new Date(1974, 7, 9), // Mes 7 es Agosto
+        category: "Política",
+        location: "Washington D.C., EE.UU.",
+        impact: "Crisis de confianza en las instituciones estadounidenses."
+    },
+    {
+        id: "event-95",
+        title: "Crisis del petróleo de 1973",
+        description: "Embargo petrolero árabe causa crisis energética global.",
+        date: new Date(1973, 9, 17), // Mes 9 es Octubre
+        category: "Economía",
+        location: "Global",
+        impact: "Cambió la geopolítica energética mundial."
+    },
+    // Eventos importantes 2010-2024
+    {
+        id: "event-56",
+        title: "Lanzamiento de ChatGPT",
+        description: "OpenAI lanza ChatGPT, popularizando la IA conversacional.",
+        date: new Date(2022, 10, 30), // Mes 10 es Noviembre
+        category: "Tecnología",
+        location: "San Francisco, EE.UU.",
+        impact: "Revolución en IA accesible al público general."
+    },
+    {
+        id: "event-57",
+        title: "Guerra en Ucrania",
+        description: "Rusia invade Ucrania, iniciando un conflicto a gran escala.",
+        date: new Date(2022, 1, 24), // Mes 1 es Febrero
+        category: "Conflictos",
+        location: "Ucrania",
+        impact: "Crisis humanitaria y geopolítica global."
+    },
+    {
+        id: "event-58",
+        title: "Lanzamiento de TikTok globalmente",
+        description: "TikTok se expande mundialmente tras fusionarse con Musical.ly.",
+        date: new Date(2018, 7, 2), // Mes 7 es Agosto
+        category: "Tecnología",
+        location: "Global",
+        impact: "Transformó el consumo de video corto y la cultura digital."
+    },
+    {
+        id: "event-59",
+        title: "Muerte de la Reina Isabel II",
+        description: "Fallece la Reina Isabel II tras 70 años de reinado.",
+        date: new Date(2022, 8, 8), // Mes 8 es Septiembre
+        category: "Sociedad",
+        location: "Balmoral, Escocia",
+        impact: "Fin de la era más larga de la monarquía británica."
+    },
+    {
+        id: "event-60",
+        title: "Primera imagen de un agujero negro",
+        description: "El Event Horizon Telescope captura la primera imagen de un agujero negro.",
+        date: new Date(2019, 3, 10), // Mes 3 es Abril
+        category: "Ciencia",
+        location: "Galaxia M87",
+        impact: "Confirmación visual de la teoría de la relatividad de Einstein."
+    },
+    {
+        id: "event-61",
+        title: "Lanzamiento de Disney+",
+        description: "Disney lanza su plataforma de streaming Disney+.",
+        date: new Date(2019, 10, 12), // Mes 10 es Noviembre
+        category: "Cultura",
+        location: "EE.UU.",
+        impact: "Intensificó la guerra del streaming y cambió el entretenimiento."
+    },
+    {
+        id: "event-62",
+        title: "Protestas Black Lives Matter 2020",
+        description: "Ola masiva de protestas tras la muerte de George Floyd.",
+        date: new Date(2020, 4, 25), // Mes 4 es Mayo
+        category: "Sociedad",
+        location: "EE.UU. y mundial",
+        impact: "Movimiento global por la justicia racial."
+    },
+    {
+        id: "event-63",
+        title: "Lanzamiento de las vacunas COVID-19",
+        description: "Primeras vacunas contra COVID-19 aprobadas y distribuidas.",
+        date: new Date(2020, 11, 8), // Mes 11 es Diciembre
+        category: "Salud",
+        location: "Global",
+        impact: "Hito científico en desarrollo de vacunas en tiempo récord."
+    },
+    {
+        id: "event-64",
+        title: "Asalto al Capitolio de EE.UU.",
+        description: "Manifestantes asaltan el Capitolio durante la certificación electoral.",
+        date: new Date(2021, 0, 6), // Mes 0 es Enero
+        category: "Política",
+        location: "Washington D.C., EE.UU.",
+        impact: "Crisis democrática y polarización política extrema."
+    },
+    {
+        id: "event-65",
+        title: "Lanzamiento del James Webb Space Telescope",
+        description: "NASA lanza el telescopio espacial más avanzado de la historia.",
+        date: new Date(2021, 11, 25), // Mes 11 es Diciembre
+        category: "Ciencia",
+        location: "Espacio (lanzamiento desde Guayana Francesa)",
+        impact: "Revolución en astronomía y observación del universo primitivo."
+    },
+    {
+        id: "event-66",
+        title: "Adquisición de Twitter por Elon Musk",
+        description: "Elon Musk compra Twitter por 44 mil millones de dólares.",
+        date: new Date(2022, 9, 27), // Mes 9 es Octubre
+        category: "Tecnología",
+        location: "Global",
+        impact: "Transformación radical de la plataforma y debates sobre libertad de expresión."
+    },
+    {
+        id: "event-67",
+        title: "Lanzamiento de Zoom (popularización)",
+        description: "Zoom se populariza masivamente durante la pandemia.",
+        date: new Date(2020, 2, 15), // Mes 2 es Marzo
+        category: "Tecnología",
+        location: "Global",
+        impact: "Normalizó el trabajo remoto y las videollamadas."
+    },
+    {
+        id: "event-68",
+        title: "Incendios forestales de Australia",
+        description: "Devastadores incendios forestales arrasan Australia.",
+        date: new Date(2019, 11, 1), // Mes 11 es Diciembre
+        category: "Desastres Naturales",
+        location: "Australia",
+        impact: "Crisis ambiental y pérdida masiva de biodiversidad."
+    },
+    {
+        id: "event-69",
+        title: "Lanzamiento de GPT-3",
+        description: "OpenAI lanza GPT-3, modelo de lenguaje revolucionario.",
+        date: new Date(2020, 5, 11), // Mes 5 es Junio
+        category: "Tecnología",
+        location: "San Francisco, EE.UU.",
+        impact: "Avance significativo en inteligencia artificial generativa."
+    },
+    {
+        id: "event-70",
+        title: "Explosión en Beirut",
+        description: "Masiva explosión en el puerto de Beirut causa devastación.",
+        date: new Date(2020, 7, 4), // Mes 7 es Agosto
+        category: "Desastres Naturales",
+        location: "Beirut, Líbano",
+        impact: "Crisis humanitaria y política en Líbano."
+    },
+    {
+        id: "event-71",
+        title: "Lanzamiento de Apple Vision Pro",
+        description: "Apple presenta su primer dispositivo de realidad mixta.",
+        date: new Date(2023, 5, 5), // Mes 5 es Junio
+        category: "Tecnología",
+        location: "Cupertino, EE.UU.",
+        impact: "Entrada de Apple en realidad virtual/aumentada."
+    },
+    {
+        id: "event-72",
+        title: "Mundial de Fútbol Qatar 2022",
+        description: "Se celebra el primer Mundial de Fútbol en Oriente Medio.",
+        date: new Date(2022, 10, 20), // Mes 10 es Noviembre
+        category: "Deportes",
+        location: "Qatar",
+        impact: "Mundial controvertido por derechos humanos y clima."
+    },
+    {
+        id: "event-73",
+        title: "Lanzamiento de NFTs (boom)",
+        description: "Los NFTs experimentan un boom masivo de popularidad.",
+        date: new Date(2021, 2, 1), // Mes 2 es Marzo
+        category: "Tecnología",
+        location: "Global",
+        impact: "Nueva forma de propiedad digital y arte."
+    },
+    {
+        id: "event-74",
+        title: "Terremoto de Turquía y Siria",
+        description: "Devastador terremoto de magnitud 7.8 afecta ambos países.",
+        date: new Date(2023, 1, 6), // Mes 1 es Febrero
+        category: "Desastres Naturales",
+        location: "Turquía y Siria",
+        impact: "Decenas de miles de víctimas y destrucción masiva."
+    },
+    {
+        id: "event-75",
+        title: "Lanzamiento de Threads por Meta",
+        description: "Meta lanza Threads como competidor de Twitter.",
+        date: new Date(2023, 6, 5), // Mes 6 es Julio
+        category: "Tecnología",
+        location: "Global",
+        impact: "Nueva competencia en redes sociales de texto."
     }
     // Puedes seguir añadiendo más eventos aquí si lo deseas
   ];

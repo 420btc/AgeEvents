@@ -10,6 +10,7 @@ import {
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { DateValue, getLocalTimeZone } from "@internationalized/date";
+import { I18nProvider } from "@react-aria/i18n";
 import { UserData } from "../types/types";
 
 interface BirthDateFormProps {
@@ -79,16 +80,20 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
       transition={{ delay: 0.2 }}
     >
       <div className="space-y-4">
-        <DatePicker
-          label="Fecha de nacimiento"
-          value={birthDate}
-          onChange={setBirthDate}
-          isRequired
-          isDisabled={isLoading}
-          classNames={{
-            base: "max-w-full",
-          }}
-        />
+        <I18nProvider locale="es-ES">
+          <DatePicker
+            label="Fecha de nacimiento"
+            value={birthDate}
+            onChange={setBirthDate}
+            isRequired
+            isDisabled={isLoading}
+            classNames={{
+              base: "max-w-full",
+            }}
+            granularity="day"
+            showMonthAndYearPickers
+          />
+        </I18nProvider>
 
         <Input
           label="Lugar de nacimiento (opcional)"
