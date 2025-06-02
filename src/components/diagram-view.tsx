@@ -142,13 +142,13 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
       className="space-y-6"
     >
       <Card>
-        <CardBody className="p-6">
+        <CardBody className="p-2 md:p-6">
           <h3 className="text-lg font-medium mb-4">Diagrama Cronológico</h3>
-          <div className="h-[300px]">
+          <div className="h-[500px] md:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={chartData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                margin={{ top: 10, right: 0, left: 0, bottom: 20 }}
                 onClick={(data) => {
                   if (data && data.activePayload && data.activePayload.length) {
                     setSelectedEvent(data.activePayload[0].payload.event);
