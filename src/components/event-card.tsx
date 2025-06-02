@@ -1,0 +1,166 @@
+import React from "react";
+import { Card, CardBody, Button, Divider, Tooltip } from "@heroui/react";
+import { Icon } from "@iconify/react";
+import { motion, AnimatePresence } from "framer-motion";
+import { HistoricalEvent } from "../types/types";
+import { AIService } from "../services/ai-service";
+
+interface EventCardProps {
+  event: HistoricalEvent;
+  age: number;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  aiService?: AIService;
+}
+
+export const EventCard: React.FC<EventCardProps> = ({ 
+  event, 
+  age, 
+  isExpanded, 
+  onToggleExpand,
+  aiService
+}) => {
+  const [isAiLoading, setIsAiLoading] = React.useState<boolean>(false);
+  const [aiAnalysis, setAiAnalysis] = React.useState<string | null>(null);
+
+  const handleRequestAiAnalysis = async () => {
+    setIsAiLoading(true);
+    
+    try {
+      if (aiService) {
+        // Use AI SDK for analysis
+        const analysis = await aiService.generateEventAnalysis(event);
+        setAiAnalysis(analysis);
+      } else {
+        // Fallback to mock analysis if no AI service is available
+        setTimeout(() => {
+          setAiAnalysis(
+            `Este evento histórico tuvo un impacto significativo en ${event.category === 'Tecnología' ? 'el desarrollo tecnológico' : 'la sociedad'} de la época. ${event.impact || 'Su influencia se extendió por décadas y continúa siendo relevante en la actualidad.'} Las consecuencias directas incluyeron cambios en ${event.category === 'Política' ? 'las políticas gubernamentales' : event.category === 'Ciencia' ? 'el entendimiento científico' : 'la cultura popular'}.`
+          );
+          setIsAiLoading(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error al generar análisis:", error);
+      setAiAnalysis("No se pudo generar el análisis. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
+
+  return (
+    <Card className="mb-4 overflow-visible">
+      <CardBody className="p-4">
+        <div className="flex justify-between items-start">
+          <div className="flex items-start gap-3">
+            <div className="min-w-[50px] h-[50px] flex flex-col items-center justify-center bg-primary-100 rounded-md">
+              <span className="text-lg font-semibold text-primary-600">{age}</span>
+              <span className="text-xs text-primary-600">años</span>
+            </div>
+            
+            <div>
+              <h4 className="font-medium">{event.title}</h4>
+              <div className="flex flex-wrap gap-2 items-center text-sm text-foreground-500 mt-1">
+                <span>{event.date.toLocaleDateString()}</span>
+                <span className="w-1 h-1 rounded-full bg-foreground-400"></span>
+                <span className="flex items-center">
+                  <Icon 
+                    icon={
+                      event.category === 'Tecnología' ? 'lucide:cpu' : 
+                      event.category === 'Política' ? 'lucide:landmark' : 
+                      event.category === 'Ciencia' ? 'lucide:flask-conical' : 
+                      event.category === 'Cultura' ? 'lucide:music' : 
+                      'lucide:globe'
+                    } 
+                    className="mr-1" 
+                    size={14} 
+                  />
+                  {event.category}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex gap-1">
+            {event.location && (
+              <Tooltip content={`Ubicación: ${event.location}`}>
+                <Button
+                  isIconOnly
+                  variant="light"
+                  size="sm"
+                  aria-label="Ver ubicación"
+                >
+                  <Icon icon="lucide:map-pin" className="text-foreground-500" />
+                </Button>
+              </Tooltip>
+            )}
+            
+            <Button
+              isIconOnly
+              variant="light"
+              size="sm"
+              onPress={onToggleExpand}
+              aria-label={isExpanded ? "Colapsar" : "Expandir"}
+            >
+              <Icon 
+                icon={isExpanded ? "lucide:chevron-up" : "lucide:chevron-down"} 
+                className="text-foreground-500"
+              />
+            </Button>
+          </div>
+        </div>
+        
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Divider className="my-3" />
+              
+              <p className="text-sm">{event.description}</p>
+              
+              {event.impact && (
+                <div className="mt-3">
+                  <h5 className="text-sm font-medium">Impacto:</h5>
+                  <p className="text-sm text-foreground-500">{event.impact}</p>
+                </div>
+              )}
+              
+              {!aiAnalysis && (
+                <div className="mt-4">
+                  <Button
+                    size="sm"
+                    variant="flat"
+                    color="primary"
+                    onPress={handleRequestAiAnalysis}
+                    isLoading={isAiLoading}
+                    startContent={!isAiLoading && <Icon icon="lucide:sparkles" />}
+                  >
+                    {isAiLoading ? "Analizando..." : "Análisis IA"}
+                  </Button>
+                </div>
+              )}
+              
+              {aiAnalysis && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-4 p-3 bg-primary-50 rounded-md border border-primary-100"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <Icon icon="lucide:sparkles" className="text-primary" />
+                    <h5 className="text-sm font-medium">Análisis de IA</h5>
+                  </div>
+                  <p className="text-sm">{aiAnalysis}</p>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </CardBody>
+    </Card>
+  );
+};
