@@ -3,11 +3,13 @@ import {
   Input, 
   DatePicker, 
   Button, 
-  Spinner 
+  Spinner,
+  Checkbox,
+  CheckboxGroup 
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { DateValue, parseDate, getLocalTimeZone } from "@internationalized/date";
+import { DateValue, getLocalTimeZone } from "@internationalized/date";
 import { UserData } from "../types/types";
 
 interface BirthDateFormProps {
@@ -15,9 +17,24 @@ interface BirthDateFormProps {
   isLoading: boolean;
 }
 
+const CATEGORIES = [
+  { value: "Tecnología", label: "Tecnología", icon: "lucide:cpu" },
+  { value: "Política", label: "Política", icon: "lucide:landmark" },
+  { value: "Ciencia", label: "Ciencia", icon: "lucide:flask-conical" },
+  { value: "Cultura", label: "Cultura", icon: "lucide:music" },
+  { value: "Salud", label: "Salud", icon: "lucide:heart-pulse" },
+  { value: "Conflictos", label: "Conflictos", icon: "lucide:sword" },
+  { value: "Economía", label: "Economía", icon: "lucide:trending-up" },
+  { value: "Deportes", label: "Deportes", icon: "lucide:trophy" },
+  { value: "Sociedad", label: "Sociedad", icon: "lucide:users" },
+  { value: "Desastres Naturales", label: "Desastres Naturales", icon: "lucide:cloud-lightning" },
+  { value: "Ingeniería", label: "Ingeniería", icon: "lucide:wrench" }
+];
+
 export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoading }) => {
   const [birthDate, setBirthDate] = React.useState<DateValue | null>(null);
   const [birthLocation, setBirthLocation] = React.useState<string>("");
+  const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
   const [error, setError] = React.useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,7 +65,8 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
 
     onSubmit({
       birthDate: selectedDate,
-      birthLocation: birthLocation.trim() || null
+      birthLocation: birthLocation.trim() || null,
+      selectedCategories: selectedCategories
     });
   };
 
@@ -63,7 +81,6 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
       <div className="space-y-4">
         <DatePicker
           label="Fecha de nacimiento"
-          placeholder="Selecciona tu fecha de nacimiento"
           value={birthDate}
           onChange={setBirthDate}
           isRequired
@@ -83,6 +100,39 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
             <Icon icon="lucide:map-pin" className="text-foreground-400" />
           }
         />
+
+        <div className="space-y-3">
+          <label className="text-sm font-medium text-foreground">
+            Categorías de eventos (opcional)
+          </label>
+          <p className="text-xs text-foreground-500">
+            Selecciona las categorías que más te interesen. Si no seleccionas ninguna, se mostrarán todos los eventos.
+          </p>
+          <CheckboxGroup
+            value={selectedCategories}
+            onValueChange={setSelectedCategories}
+            isDisabled={isLoading}
+            classNames={{
+              wrapper: "grid grid-cols-2 gap-2"
+            }}
+          >
+            {CATEGORIES.map((category) => (
+              <Checkbox
+                key={category.value}
+                value={category.value}
+                classNames={{
+                  base: "inline-flex max-w-full w-full bg-content1 m-0 hover:bg-content2 items-center justify-start cursor-pointer rounded-lg gap-2 p-3 border-2 border-transparent data-[selected=true]:border-primary",
+                  label: "w-full"
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon icon={category.icon} className="text-foreground-500" />
+                  <span className="text-sm">{category.label}</span>
+                </div>
+              </Checkbox>
+            ))}
+          </CheckboxGroup>
+        </div>
       </div>
 
       {error && (

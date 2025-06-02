@@ -107,7 +107,8 @@ export class AIService {
     birthDate: Date,
     birthLocation: string | null,
     count: number = 10,
-    existingEventTitles: string[] = []
+    existingEventTitles: string[] = [],
+    selectedCategories?: string[]
   ): Promise<HistoricalEvent[]> {
     try {
       const birthYear = birthDate.getFullYear();
@@ -119,16 +120,20 @@ export class AIService {
         ? `\n\nEVENTOS EXISTENTES A EVITAR (no generes eventos similares o duplicados):\n${existingEventTitles.map(title => `- ${title}`).join('\n')}`
         : '';
 
+      const categoriesText = selectedCategories && selectedCategories.length > 0
+        ? `\n\nRESTRICCIÓN IMPORTANTE: Genera ÚNICAMENTE eventos de estas categorías específicas: ${selectedCategories.join(', ')}. NO generes eventos de otras categorías.`
+        : '';
+
       const userPrompt = `
 Genera ${count} eventos históricos importantes ocurridos entre ${birthYear} y ${currentYear}.
-${birthLocation ? `Incluye algunos eventos relevantes para ${birthLocation}.` : ''}${existingEventsText}
+${birthLocation ? `Incluye algunos eventos relevantes para ${birthLocation}.` : ''}${existingEventsText}${categoriesText}
 
 Cada evento debe incluir:
 - Un ID único y descriptivo (usa un formato como "evento-año-descripcion-corta" o similar)
 - Un título descriptivo
 - Una fecha exacta (día, mes, año)
 - Una descripción detallada (2-3 oraciones)
-- Una categoría (Tecnología, Política, Ciencia, Cultura, Deportes, Salud, Economía)
+- Una categoría${selectedCategories && selectedCategories.length > 0 ? ` (DEBE ser una de: ${selectedCategories.join(', ')})` : ' (Tecnología, Política, Ciencia, Cultura, Deportes, Salud, Economía, Conflictos, Sociedad, Desastres Naturales, Ingeniería)'}
 - Ubicación donde ocurrió
 - Impacto histórico (1-2 oraciones)
 

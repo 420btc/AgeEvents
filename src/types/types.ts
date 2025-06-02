@@ -1,6 +1,7 @@
 export interface UserData {
   birthDate: Date;
   birthLocation: string | null;
+  selectedCategories: string[];
 }
 
 export interface HistoricalEvent {

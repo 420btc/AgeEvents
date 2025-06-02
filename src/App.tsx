@@ -66,6 +66,14 @@ const App: React.FC = () => {
     }
   };
 
+  // Filter events based on selected categories
+  const filteredEvents = React.useMemo(() => {
+    if (!userData || userData.selectedCategories.length === 0) {
+      return events;
+    }
+    return events.filter(event => userData.selectedCategories.includes(event.category));
+  }, [events, userData]);
+
   const handleGenerateMoreEvents = async () => {
     if (!userData || !aiService) return;
     
@@ -73,13 +81,19 @@ const App: React.FC = () => {
     
     try {
       // Get existing event titles to avoid duplicates
-      const existingTitles = events.map(event => event.title);
+      // If categories are selected, only consider events from those categories
+      const relevantEvents = userData.selectedCategories.length > 0 
+        ? events.filter(event => userData.selectedCategories.includes(event.category))
+        : events;
+      
+      const existingTitles = relevantEvents.map(event => event.title);
       
       const newEvents = await aiService.generateHistoricalEvents(
         userData.birthDate,
         userData.birthLocation,
         15, // Generate 15 more events
-        existingTitles // Pass existing titles to avoid duplicates
+        existingTitles, // Pass existing titles to avoid duplicates
+        userData.selectedCategories.length > 0 ? userData.selectedCategories : undefined // Pass selected categories
       );
       
       if (newEvents.length > 0) {
@@ -142,6 +156,11 @@ const App: React.FC = () => {
                     <p className="text-foreground-500 text-sm">
                       Fecha de nacimiento: {userData.birthDate.toLocaleDateString()}
                       {userData.birthLocation && ` • ${userData.birthLocation}`}
+                      {userData.selectedCategories.length > 0 && (
+                        <span className="block mt-1">
+                          Categorías: {userData.selectedCategories.join(", ")}
+                        </span>
+                      )}
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2">
@@ -176,13 +195,13 @@ const App: React.FC = () => {
               className="mb-6"
             >
               <Tab key="timeline" title="Esquema">
-                <TimelineView userData={userData} events={events} aiService={aiService || undefined} />
+                <TimelineView userData={userData} events={filteredEvents} aiService={aiService || undefined} />
               </Tab>
               <Tab key="diagram" title="Diagrama">
-                <DiagramView userData={userData} events={events} aiService={aiService || undefined} />
+                <DiagramView userData={userData} events={filteredEvents} aiService={aiService || undefined} />
               </Tab>
               <Tab key="simple" title="Simple">
-                <SimpleView userData={userData} events={events} />
+                <SimpleView userData={userData} events={filteredEvents} />
               </Tab>
             </Tabs>
           </motion.div>
