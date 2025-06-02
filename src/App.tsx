@@ -218,8 +218,9 @@ const App: React.FC = () => {
                         {userData.birthLocation && ` • 📍 ${userData.birthLocation}`}
                       </p>
                       {userData.selectedCategories.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          <span className="text-foreground-600 text-sm font-medium">Categorías:</span>
+                        <div>
+                          <span className="text-foreground-600 text-sm font-medium mb-2 block">Categorías:</span>
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                           {userData.selectedCategories.map((category) => {
                             const getCategoryStyle = (cat: string) => {
                               const styles: Record<string, { icon: string; bg: string; text: string; border: string }> = {
@@ -239,12 +240,13 @@ const App: React.FC = () => {
                             };
                             const style = getCategoryStyle(category);
                             return (
-                              <span key={category} className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full border ${style.bg} ${style.text} ${style.border}`}>
+                              <span key={category} className={`inline-flex items-center gap-1 px-2 py-1 text-xs md:text-[10px] font-medium rounded-full border ${style.bg} ${style.text} ${style.border}`}>
                                 <Icon icon={style.icon} className="w-3 h-3" />
                                 {category}
                               </span>
                             );
                           })}
+                          </div>
                         </div>
                       )}
                     </div>

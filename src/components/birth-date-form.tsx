@@ -118,7 +118,7 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
             onValueChange={setSelectedCategories}
             isDisabled={isLoading}
             classNames={{
-              wrapper: "grid grid-cols-2 gap-2"
+              wrapper: "grid grid-cols-2 md:grid-cols-3 gap-2"
             }}
           >
             {CATEGORIES.map((category) => (
@@ -132,7 +132,7 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
               >
                 <div className="flex items-center gap-2">
                   <Icon icon={category.icon} className="text-foreground-500" />
-                  <span className="text-sm">{category.label}</span>
+                  <span className="text-sm md:text-xs">{category.label}</span>
                 </div>
               </Checkbox>
             ))}
