@@ -88,6 +88,9 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
             isDisabled={isLoading}
             classNames={{
               base: "max-w-full",
+              label: "text-base md:text-sm",
+              input: "text-base md:text-sm",
+              innerWrapper: "text-base md:text-sm"
             }}
             granularity="day"
             showMonthAndYearPickers
@@ -100,8 +103,13 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
           value={birthLocation}
           onValueChange={setBirthLocation}
           isDisabled={isLoading}
+          classNames={{
+            label: "text-base md:text-sm",
+            input: "text-base md:text-sm",
+            inputWrapper: "text-base md:text-sm"
+          }}
           startContent={
-            <Icon icon="lucide:map-pin" className="text-foreground-400" />
+            <Icon icon="lucide:map-pin" className="text-foreground-400 text-base md:text-sm" />
           }
         />
 
