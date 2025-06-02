@@ -80,27 +80,44 @@ const App: React.FC = () => {
     setIsGeneratingMoreEvents(true);
     
     try {
-      // Get existing event titles to avoid duplicates
-      // If categories are selected, only consider events from those categories
-      const relevantEvents = userData.selectedCategories.length > 0 
-        ? events.filter(event => userData.selectedCategories.includes(event.category))
-        : events;
+      // Get ALL existing event titles to avoid duplicates, not just from selected categories
+      const existingTitles = events.map(event => event.title);
       
-      const existingTitles = relevantEvents.map(event => event.title);
+      console.log('Eventos existentes antes de generar:', events.length);
+      console.log('Títulos existentes:', existingTitles);
       
       const newEvents = await aiService.generateHistoricalEvents(
         userData.birthDate,
         userData.birthLocation,
         15, // Generate 15 more events
-        existingTitles, // Pass existing titles to avoid duplicates
+        existingTitles, // Pass ALL existing titles to avoid duplicates
         userData.selectedCategories.length > 0 ? userData.selectedCategories : undefined // Pass selected categories
       );
       
+      console.log('Nuevos eventos generados:', newEvents.length);
+      console.log('Nuevos eventos:', newEvents.map(e => e.title));
+      
       if (newEvents.length > 0) {
-        const allEvents = [...events, ...newEvents];
-        // Sort events by date
-        allEvents.sort((a, b) => a.date.getTime() - b.date.getTime());
-        setEvents(allEvents);
+        // Filter out any events that might still be duplicates based on title similarity
+        const filteredNewEvents = newEvents.filter(newEvent => 
+          !events.some(existingEvent => 
+            existingEvent.title.toLowerCase().trim() === newEvent.title.toLowerCase().trim()
+          )
+        );
+        
+        console.log('Eventos filtrados (sin duplicados):', filteredNewEvents.length);
+        
+        if (filteredNewEvents.length > 0) {
+          const allEvents = [...events, ...filteredNewEvents];
+          // Sort events by date
+          allEvents.sort((a, b) => a.date.getTime() - b.date.getTime());
+          console.log('Total de eventos después de agregar:', allEvents.length);
+          setEvents(allEvents);
+        } else {
+          console.log('No se agregaron eventos nuevos (todos eran duplicados)');
+        }
+      } else {
+        console.log('No se generaron eventos nuevos');
       }
     } catch (error) {
       console.error("Error al generar más eventos:", error);
@@ -152,50 +169,104 @@ const App: React.FC = () => {
               <CardBody className="p-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
                       <h2 className="text-xl font-medium">Tu Cronología Personal</h2>
-                      <div className="flex gap-2">
-                        <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                          Locales: {filteredEvents.filter(event => !event.isAIGenerated).length}
+                      <div className="flex flex-wrap gap-2 min-w-0">
+                        <span className="px-4 py-1.5 text-sm font-bold bg-green-600 text-white rounded-full shadow-md border border-green-700 whitespace-nowrap">
+                          📍 Locales: {filteredEvents.filter(event => !event.isAIGenerated).length}
                         </span>
-                        <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                          IA: {filteredEvents.filter(event => event.isAIGenerated).length}
+                        <span className="px-4 py-1.5 text-sm font-bold bg-blue-600 text-white rounded-full shadow-md border border-blue-700 whitespace-nowrap">
+                          🤖 IA: {filteredEvents.filter(event => event.isAIGenerated).length}
                         </span>
-                        <span className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
-                          Total: {filteredEvents.length}
+                        <span className="px-4 py-1.5 text-sm font-bold bg-purple-600 text-white rounded-full shadow-md border border-purple-700 whitespace-nowrap">
+                          📊 Total: {filteredEvents.length}
                         </span>
                       </div>
                     </div>
-                    <p className="text-foreground-500 text-sm">
-                      Fecha de nacimiento: {userData.birthDate.toLocaleDateString()}
-                      {userData.birthLocation && ` • ${userData.birthLocation}`}
+                    <div className="space-y-2">
+                      <p className="text-foreground-600 text-base font-medium">
+                        📅 Fecha de nacimiento: {userData.birthDate.toLocaleDateString()}
+                        {userData.birthLocation && ` • 📍 ${userData.birthLocation}`}
+                      </p>
                       {userData.selectedCategories.length > 0 && (
-                        <span className="block mt-1">
-                          Categorías: {userData.selectedCategories.join(", ")}
-                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="text-foreground-600 text-sm font-medium">Categorías:</span>
+                          {userData.selectedCategories.map((category) => {
+                            const getCategoryStyle = (cat: string) => {
+                              const styles: Record<string, { icon: string; bg: string; text: string; border: string }> = {
+                                'Tecnología': { icon: 'lucide:cpu', bg: 'bg-blue-100', text: 'text-blue-800', border: 'border-blue-300' },
+                                'Política': { icon: 'lucide:landmark', bg: 'bg-red-100', text: 'text-red-800', border: 'border-red-300' },
+                                'Ciencia': { icon: 'lucide:flask-conical', bg: 'bg-green-100', text: 'text-green-800', border: 'border-green-300' },
+                                'Cultura': { icon: 'lucide:music', bg: 'bg-purple-100', text: 'text-purple-800', border: 'border-purple-300' },
+                                'Salud': { icon: 'lucide:heart-pulse', bg: 'bg-pink-100', text: 'text-pink-800', border: 'border-pink-300' },
+                                'Conflictos': { icon: 'lucide:sword', bg: 'bg-orange-100', text: 'text-orange-800', border: 'border-orange-300' },
+                                'Economía': { icon: 'lucide:trending-up', bg: 'bg-emerald-100', text: 'text-emerald-800', border: 'border-emerald-300' },
+                                'Deportes': { icon: 'lucide:trophy', bg: 'bg-yellow-100', text: 'text-yellow-800', border: 'border-yellow-300' },
+                                'Sociedad': { icon: 'lucide:users', bg: 'bg-indigo-100', text: 'text-indigo-800', border: 'border-indigo-300' },
+                                'Desastres Naturales': { icon: 'lucide:cloud-lightning', bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' },
+                                'Ingeniería': { icon: 'lucide:wrench', bg: 'bg-teal-100', text: 'text-teal-800', border: 'border-teal-300' }
+                              };
+                              return styles[cat] || { icon: 'lucide:tag', bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' };
+                            };
+                            const style = getCategoryStyle(category);
+                            return (
+                              <span key={category} className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full border ${style.bg} ${style.text} ${style.border}`}>
+                                <Icon icon={style.icon} className="w-3 h-3" />
+                                {category}
+                              </span>
+                            );
+                          })}
+                        </div>
                       )}
-                    </p>
+                    </div>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2">
                     {aiService && (
-                      <Button
-                        color="primary"
-                        variant="flat"
-                        size="sm"
-                        startContent={<Icon icon="lucide:plus" />}
-                        isLoading={isGeneratingMoreEvents}
-                        onPress={handleGenerateMoreEvents}
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
                       >
-                        {isGeneratingMoreEvents ? "Generando con IA..." : "Generar más eventos con IA"}
-                      </Button>
+                        <Button
+                          color="primary"
+                          variant="solid"
+                          size="lg"
+                          startContent={<Icon icon="lucide:sparkles" className="text-lg" />}
+                          isLoading={isGeneratingMoreEvents}
+                          onPress={handleGenerateMoreEvents}
+                          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:shadow-blue-500/25 font-semibold px-6 py-3 text-white border-0"
+                          style={{
+                            boxShadow: isGeneratingMoreEvents 
+                              ? '0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(147, 51, 234, 0.3)' 
+                              : '0 4px 15px rgba(0, 0, 0, 0.1)'
+                          }}
+                        >
+                          {isGeneratingMoreEvents ? (
+                            <span className="flex items-center gap-2">
+                              <Icon icon="lucide:loader-2" className="animate-spin" />
+                              Generando con IA...
+                            </span>
+                          ) : (
+                            "✨ Generar más eventos con IA"
+                          )}
+                        </Button>
+                      </motion.div>
                     )}
-                    <Button 
-                      variant="light"
-                      size="sm"
-                      onPress={() => setUserData(null)}
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     >
-                      Cambiar datos
-                    </Button>
+                      <Button 
+                        variant="solid"
+                        size="lg"
+                        startContent={<Icon icon="lucide:settings" className="text-lg" />}
+                        onPress={() => setUserData(null)}
+                        className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:shadow-gray-500/25 font-semibold px-6 py-3 text-white border-0"
+                      >
+                        🔄 Cambiar datos
+                      </Button>
+                    </motion.div>
                   </div>
                 </div>
               </CardBody>
