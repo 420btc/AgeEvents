@@ -10,7 +10,7 @@ import { ThemeSwitcher } from "./components/theme-switcher";
 import { ApiKeyForm } from "./components/api-key-form";
 import { UserData, HistoricalEvent } from "./types/types";
 import { generateMockEvents } from "./data/mock-events";
-import { AIService } from "./services/ai-service";
+import { AIService, AIProvider } from "./services/ai-service";
 
 const App: React.FC = () => {
   const [userData, setUserData] = React.useState<UserData | null>(null);
@@ -18,25 +18,32 @@ const App: React.FC = () => {
   const [selectedView, setSelectedView] = React.useState<string>("timeline");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [apiKey, setApiKey] = React.useState<string>("");
+  const [aiProvider, setAiProvider] = React.useState<AIProvider>("openai");
   const [aiService, setAiService] = React.useState<AIService | null>(null);
   const [isGeneratingMoreEvents, setIsGeneratingMoreEvents] = React.useState<boolean>(false);
 
-  // Initialize AI service when API key changes
+  // Initialize AI service when API key or provider changes
   React.useEffect(() => {
-    if (apiKey) {
-      const service = new AIService({ apiKey });
+    if (apiKey && aiProvider) {
+      const service = new AIService({ provider: aiProvider, apiKey });
       setAiService(service);
       
-      // Save API key to localStorage
+      // Save API key and provider to localStorage
       localStorage.setItem("ai_api_key", apiKey);
+      localStorage.setItem("ai_provider", aiProvider);
     }
-  }, [apiKey]);
+  }, [apiKey, aiProvider]);
 
-  // Load API key from localStorage on mount
+  // Load API key and provider from localStorage on mount
   React.useEffect(() => {
     const savedApiKey = localStorage.getItem("ai_api_key");
+    const savedProvider = localStorage.getItem("ai_provider") as AIProvider;
+    
     if (savedApiKey) {
       setApiKey(savedApiKey);
+    }
+    if (savedProvider && (savedProvider === 'openai' || savedProvider === 'anthropic')) {
+      setAiProvider(savedProvider);
     }
   }, []);
 
@@ -44,32 +51,13 @@ const App: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // Generate initial mock events
+      // Generate only initial mock events (local events)
       const mockEvents = generateMockEvents(data.birthDate);
       
-      // If AI service is available, try to generate additional events
-      let allEvents = [...mockEvents];
-      
-      if (aiService) {
-        try {
-          const aiEvents = await aiService.generateHistoricalEvents(
-            data.birthDate,
-            data.birthLocation,
-            10 // Generate 10 additional events
-          );
-          
-          if (aiEvents.length > 0) {
-            allEvents = [...mockEvents, ...aiEvents];
-          }
-        } catch (error) {
-          console.error("Error al generar eventos con IA:", error);
-        }
-      }
-      
       // Sort events by date
-      allEvents.sort((a, b) => a.date.getTime() - b.date.getTime());
+      mockEvents.sort((a, b) => a.date.getTime() - b.date.getTime());
       
-      setEvents(allEvents);
+      setEvents(mockEvents);
       setUserData(data);
     } catch (error) {
       console.error("Error al generar la cronología:", error);
@@ -84,10 +72,14 @@ const App: React.FC = () => {
     setIsGeneratingMoreEvents(true);
     
     try {
+      // Get existing event titles to avoid duplicates
+      const existingTitles = events.map(event => event.title);
+      
       const newEvents = await aiService.generateHistoricalEvents(
         userData.birthDate,
         userData.birthLocation,
-        5 // Generate 5 more events
+        15, // Generate 15 more events
+        existingTitles // Pass existing titles to avoid duplicates
       );
       
       if (newEvents.length > 0) {
@@ -111,8 +103,10 @@ const App: React.FC = () => {
         </h1>
         <div className="flex items-center gap-2">
           <ApiKeyForm 
-            apiKey={apiKey} 
+            apiKey={apiKey}
+            provider={aiProvider}
             onApiKeyChange={setApiKey}
+            onProviderChange={setAiProvider}
             onSave={() => {}}
           />
           <ThemeSwitcher />
@@ -160,7 +154,7 @@ const App: React.FC = () => {
                         isLoading={isGeneratingMoreEvents}
                         onPress={handleGenerateMoreEvents}
                       >
-                        {isGeneratingMoreEvents ? "Generando..." : "Generar más eventos"}
+                        {isGeneratingMoreEvents ? "Generando con IA..." : "Generar más eventos con IA"}
                       </Button>
                     )}
                     <Button 
@@ -188,7 +182,7 @@ const App: React.FC = () => {
                 <DiagramView userData={userData} events={events} aiService={aiService || undefined} />
               </Tab>
               <Tab key="simple" title="Simple">
-                <SimpleView userData={userData} events={events} aiService={aiService || undefined} />
+                <SimpleView userData={userData} events={events} />
               </Tab>
             </Tabs>
           </motion.div>

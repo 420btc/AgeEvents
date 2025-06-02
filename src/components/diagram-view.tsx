@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, Button, Tooltip } from "@heroui/react";
+import { Card, CardBody } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { 
@@ -66,9 +66,50 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
     return {
       year: event.date.getFullYear(),
       age,
-      event
+      event,
+      isAIGenerated: event.isAIGenerated || false
     };
   });
+
+  // Custom dot component for AI-generated events
+  const CustomDot = (props: any) => {
+    const { cx, cy, payload } = props;
+    const isAI = payload.isAIGenerated;
+    
+    return (
+      <circle
+        cx={cx}
+        cy={cy}
+        r={6}
+        fill="hsl(var(--heroui-background))"
+        stroke={isAI ? "#3b82f6" : "hsl(var(--heroui-primary-500))"}
+        strokeWidth={isAI ? 3 : 2}
+        style={{
+          filter: isAI ? 'drop-shadow(0 0 4px rgba(59, 130, 246, 0.5))' : 'none'
+        }}
+      />
+    );
+  };
+
+  // Custom active dot for hover state
+  const CustomActiveDot = (props: any) => {
+    const { cx, cy, payload } = props;
+    const isAI = payload.isAIGenerated;
+    
+    return (
+      <circle
+        cx={cx}
+        cy={cy}
+        r={8}
+        fill={isAI ? "#3b82f6" : "hsl(var(--heroui-primary-500))"}
+        stroke="hsl(var(--heroui-background))"
+        strokeWidth={2}
+        style={{
+          filter: isAI ? 'drop-shadow(0 0 6px rgba(59, 130, 246, 0.7))' : 'none'
+        }}
+      />
+    );
+  };
 
   // Sort events by date
   chartData.sort((a, b) => a.year - b.year);
@@ -134,18 +175,8 @@ export const DiagramView: React.FC<DiagramViewProps> = ({ userData, events, aiSe
                   dataKey="age"
                   stroke="hsl(var(--heroui-primary-500))"
                   strokeWidth={2}
-                  dot={{ 
-                    r: 6, 
-                    fill: "hsl(var(--heroui-background))", 
-                    stroke: "hsl(var(--heroui-primary-500))", 
-                    strokeWidth: 2 
-                  }}
-                  activeDot={{ 
-                    r: 8, 
-                    fill: "hsl(var(--heroui-primary-500))", 
-                    stroke: "hsl(var(--heroui-background))", 
-                    strokeWidth: 2 
-                  }}
+                  dot={<CustomDot />}
+                  activeDot={<CustomActiveDot />}
                 />
               </LineChart>
             </ResponsiveContainer>

@@ -3,15 +3,13 @@ import { Card, CardBody, Divider, Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { UserData, HistoricalEvent } from "../types/types";
-import { AIService } from "../services/ai-service";
 
 interface SimpleViewProps {
   userData: UserData;
   events: HistoricalEvent[];
-  aiService?: AIService;
 }
 
-export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events, aiService }) => {
+export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events }) => {
   const [expandedEvent, setExpandedEvent] = React.useState<string | null>(null);
   
   if (events.length === 0) {
@@ -117,7 +115,7 @@ export const SimpleView: React.FC<SimpleViewProps> = ({ userData, events, aiServ
                           
                           {event.location && (
                             <div className="mt-2 flex items-center text-sm text-foreground-500">
-                              <Icon icon="lucide:map-pin" className="mr-1" size={14} />
+                              <Icon icon="lucide:map-pin" className="mr-1 text-sm" />
                               <span>{event.location}</span>
                             </div>
                           )}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, Divider, Button, Tooltip } from "@heroui/react";
+import { Card, CardBody } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { EventCard } from "./event-card";
@@ -96,7 +96,11 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ userData, events, ai
                         transition={{ delay: (decadeIndex * 0.1) + (index * 0.05) }}
                         className="relative"
                       >
-                        <div className="absolute -left-[29px] w-4 h-4 rounded-full bg-primary border-4 border-background"></div>
+                        <div className={`absolute -left-[29px] w-4 h-4 rounded-full border-4 border-background ${
+                          event.isAIGenerated 
+                            ? 'bg-blue-500 shadow-lg shadow-blue-500/50' 
+                            : 'bg-primary'
+                        }`}></div>
                         <EventCard 
                           event={event} 
                           age={age}

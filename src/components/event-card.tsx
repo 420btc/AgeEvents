@@ -49,7 +49,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   };
 
   return (
-    <Card className="mb-4 overflow-visible">
+    <Card className={`mb-4 overflow-visible ${event.isAIGenerated ? 'ring-2 ring-blue-400 ring-opacity-60' : ''}`}>
       <CardBody className="p-4">
         <div className="flex justify-between items-start">
           <div className="flex items-start gap-3">
@@ -59,7 +59,14 @@ export const EventCard: React.FC<EventCardProps> = ({
             </div>
             
             <div>
-              <h4 className="font-medium">{event.title}</h4>
+              <div className="flex items-center gap-2 mb-1">
+                <h4 className="font-medium">{event.title}</h4>
+                {event.isAIGenerated && (
+                  <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                    Generada por IA
+                  </span>
+                )}
+              </div>
               <div className="flex flex-wrap gap-2 items-center text-sm text-foreground-500 mt-1">
                 <span>{event.date.toLocaleDateString()}</span>
                 <span className="w-1 h-1 rounded-full bg-foreground-400"></span>
@@ -72,8 +79,7 @@ export const EventCard: React.FC<EventCardProps> = ({
                       event.category === 'Cultura' ? 'lucide:music' : 
                       'lucide:globe'
                     } 
-                    className="mr-1" 
-                    size={14} 
+                    className="mr-1 text-sm" 
                   />
                   {event.category}
                 </span>

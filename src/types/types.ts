@@ -12,4 +12,5 @@ export interface HistoricalEvent {
   location?: string;
   impact?: string;
   imageUrl?: string;
+  isAIGenerated?: boolean;
 }
