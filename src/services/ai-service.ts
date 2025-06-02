@@ -27,9 +27,9 @@ export class AIService {
 
   private async callOpenAI(messages: OpenAIMessage[], useJsonMode = false): Promise<string> {
     const requestBody: any = {
-      model: 'gpt-4o',
+      model: 'gpt-4o-mini',
       messages,
-      max_tokens: 4000,
+      max_tokens: 9000,
       temperature: 0.7
     };
 
