@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HistoricalEvent } from "../types/types";
 import { AIService } from "../services/ai-service";
+import { MapboxMap } from "./mapbox-map";
 
 interface EventCardProps {
   event: HistoricalEvent;
@@ -143,6 +144,13 @@ export const EventCard: React.FC<EventCardProps> = ({
                 <div className="mt-3">
                   <h5 className="text-sm font-medium">Impacto:</h5>
                   <p className="text-sm text-foreground-500">{event.impact}</p>
+                </div>
+              )}
+              
+              {event.location && (
+                <div className="mt-4">
+                  <h5 className="text-sm font-medium mb-2">Ubicación: {event.location}</h5>
+                  <MapboxMap location={event.location} className="border border-divider" />
                 </div>
               )}
               
