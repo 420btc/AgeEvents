@@ -365,15 +365,7 @@ export const generateMockEvents = (birthDate: Date): HistoricalEvent[] => {
       location: "Irak",
       impact: "Derrocamiento de Saddam Hussein, larga insurgencia e inestabilidad regional."
     },
-    {
-        id: "event-41",
-        title: "Apertura del Eurotúnel",
-        description: "Inauguración oficial del túnel bajo el Canal de la Mancha.",
-        date: new Date(1994, 4, 6), // Mes 4 es Mayo
-        category: "Ingeniería",
-        location: "Calais (Francia) y Folkestone (Reino Unido)",
-        impact: "Conexión terrestre directa entre Reino Unido y Europa continental."
-    },
+
     {
         id: "event-42",
         title: "Muerte de la Princesa Diana",

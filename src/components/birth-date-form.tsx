@@ -28,8 +28,7 @@ const CATEGORIES = [
   { value: "Economía", label: "Economía", icon: "lucide:trending-up" },
   { value: "Deportes", label: "Deportes", icon: "lucide:trophy" },
   { value: "Sociedad", label: "Sociedad", icon: "lucide:users" },
-  { value: "Desastres Naturales", label: "Desastres Naturales", icon: "lucide:cloud-lightning" },
-  { value: "Ingeniería", label: "Ingeniería", icon: "lucide:wrench" }
+  { value: "Desastres Naturales", label: "Desastres Naturales", icon: "lucide:cloud-lightning" }
 ];
 
 export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoading }) => {
@@ -118,7 +117,7 @@ export const BirthDateForm: React.FC<BirthDateFormProps> = ({ onSubmit, isLoadin
             onValueChange={setSelectedCategories}
             isDisabled={isLoading}
             classNames={{
-              wrapper: "grid grid-cols-2 md:grid-cols-3 gap-2"
+              wrapper: "grid grid-cols-2 md:grid-cols-2 gap-2"
             }}
           >
             {CATEGORIES.map((category) => (

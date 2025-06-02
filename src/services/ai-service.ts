@@ -133,7 +133,7 @@ Cada evento debe incluir:
 - Un título descriptivo
 - Una fecha exacta (día, mes, año)
 - Una descripción detallada (2-3 oraciones)
-- Una categoría${selectedCategories && selectedCategories.length > 0 ? ` (DEBE ser una de: ${selectedCategories.join(', ')})` : ' (Tecnología, Política, Ciencia, Cultura, Deportes, Salud, Economía, Conflictos, Sociedad, Desastres Naturales, Ingeniería)'}
+- Una categoría${selectedCategories && selectedCategories.length > 0 ? ` (DEBE ser una de: ${selectedCategories.join(', ')})` : ' (Tecnología, Política, Ciencia, Cultura, Deportes, Salud, Economía, Conflictos, Sociedad, Desastres Naturales)'}
 - Ubicación donde ocurrió
 - Impacto histórico (1-2 oraciones)
 

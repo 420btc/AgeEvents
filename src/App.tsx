@@ -220,7 +220,7 @@ const App: React.FC = () => {
                       {userData.selectedCategories.length > 0 && (
                         <div>
                           <span className="text-foreground-600 text-sm font-medium mb-2 block">Categorías:</span>
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                          <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
                           {userData.selectedCategories.map((category) => {
                             const getCategoryStyle = (cat: string) => {
                               const styles: Record<string, { icon: string; bg: string; text: string; border: string }> = {
@@ -233,8 +233,7 @@ const App: React.FC = () => {
                                 'Economía': { icon: 'lucide:trending-up', bg: 'bg-emerald-100', text: 'text-emerald-800', border: 'border-emerald-300' },
                                 'Deportes': { icon: 'lucide:trophy', bg: 'bg-yellow-100', text: 'text-yellow-800', border: 'border-yellow-300' },
                                 'Sociedad': { icon: 'lucide:users', bg: 'bg-indigo-100', text: 'text-indigo-800', border: 'border-indigo-300' },
-                                'Desastres Naturales': { icon: 'lucide:cloud-lightning', bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' },
-                                'Ingeniería': { icon: 'lucide:wrench', bg: 'bg-teal-100', text: 'text-teal-800', border: 'border-teal-300' }
+                                'Desastres Naturales': { icon: 'lucide:cloud-lightning', bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' }
                               };
                               return styles[cat] || { icon: 'lucide:tag', bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' };
                             };
