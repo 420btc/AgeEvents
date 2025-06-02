@@ -861,8 +861,233 @@ export const generateMockEvents = (birthDate: Date): HistoricalEvent[] => {
         category: "Tecnología",
         location: "Global",
         impact: "Nueva competencia en redes sociales de texto."
+    },
+    // Eventos adicionales para completar 100
+    {
+        id: "event-96",
+        title: "Invención de la Imprenta",
+        description: "Johannes Gutenberg inventa la imprenta de tipos móviles.",
+        date: new Date(1440, 0, 1), // Aproximadamente 1440
+        category: "Tecnología",
+        location: "Maguncia, Alemania",
+        impact: "Revolución en la difusión del conocimiento y la alfabetización."
+    },
+    {
+        id: "event-97",
+        title: "Descubrimiento de América",
+        description: "Cristóbal Colón llega a América en su primer viaje.",
+        date: new Date(1492, 9, 12), // Mes 9 es Octubre
+        category: "Exploración",
+        location: "Islas del Caribe",
+        impact: "Inicio de la colonización europea de América."
+    },
+    {
+        id: "event-98",
+        title: "Revolución Francesa",
+        description: "Inicio de la Revolución Francesa con la toma de la Bastilla.",
+        date: new Date(1789, 6, 14), // Mes 6 es Julio
+        category: "Política",
+        location: "París, Francia",
+        impact: "Fin del Antiguo Régimen y nacimiento de la democracia moderna."
+    },
+    {
+        id: "event-99",
+        title: "Revolución Industrial",
+        description: "Inicio de la Primera Revolución Industrial en Inglaterra.",
+        date: new Date(1760, 0, 1), // Aproximadamente 1760
+        category: "Economía",
+        location: "Inglaterra",
+        impact: "Transformación de la producción y la sociedad moderna."
+    },
+    {
+        id: "event-100",
+        title: "Independencia de Estados Unidos",
+        description: "Declaración de Independencia de las Trece Colonias.",
+        date: new Date(1776, 6, 4), // Mes 6 es Julio
+        category: "Política",
+        location: "Filadelfia, EE.UU.",
+        impact: "Nacimiento de Estados Unidos y modelo para otras independencias."
+    },
+    {
+        id: "event-101",
+        title: "Abolición de la Esclavitud en EE.UU.",
+        description: "La Decimotercera Enmienda prohíbe la esclavitud.",
+        date: new Date(1865, 11, 6), // Mes 11 es Diciembre
+        category: "Sociedad",
+        location: "Estados Unidos",
+        impact: "Fin legal de la esclavitud en Estados Unidos."
+    },
+    {
+        id: "event-102",
+        title: "Invención del Teléfono",
+        description: "Alexander Graham Bell patenta el teléfono.",
+        date: new Date(1876, 2, 10), // Mes 2 es Marzo
+        category: "Tecnología",
+        location: "Boston, EE.UU.",
+        impact: "Revolución en las comunicaciones a larga distancia."
+    },
+    {
+        id: "event-103",
+        title: "Descubrimiento de la Penicilina",
+        description: "Alexander Fleming descubre la penicilina.",
+        date: new Date(1928, 8, 3), // Mes 8 es Septiembre
+        category: "Salud",
+        location: "Londres, Reino Unido",
+        impact: "Inicio de la era de los antibióticos y medicina moderna."
+    },
+    {
+        id: "event-104",
+        title: "Primer Vuelo de los Hermanos Wright",
+        description: "Primer vuelo motorizado exitoso de la historia.",
+        date: new Date(1903, 11, 17), // Mes 11 es Diciembre
+        category: "Tecnología",
+        location: "Kitty Hawk, Carolina del Norte, EE.UU.",
+        impact: "Inicio de la era de la aviación."
+    },
+    {
+        id: "event-105",
+        title: "Teoría de la Relatividad de Einstein",
+        description: "Einstein publica su teoría especial de la relatividad.",
+        date: new Date(1905, 5, 30), // Mes 5 es Junio
+        category: "Ciencia",
+        location: "Berna, Suiza",
+        impact: "Revolución en la física y comprensión del universo."
+    },
+    {
+        id: "event-106",
+        title: "Invención de la Radio",
+        description: "Guglielmo Marconi realiza la primera transmisión de radio.",
+        date: new Date(1895, 0, 1), // Aproximadamente 1895
+        category: "Tecnología",
+        location: "Italia",
+        impact: "Revolución en las comunicaciones masivas."
+    },
+    {
+        id: "event-107",
+        title: "Descubrimiento de los Rayos X",
+        description: "Wilhelm Röntgen descubre los rayos X.",
+        date: new Date(1895, 10, 8), // Mes 10 es Noviembre
+        category: "Ciencia",
+        location: "Würzburg, Alemania",
+        impact: "Revolución en medicina y diagnóstico médico."
+    },
+    {
+        id: "event-108",
+        title: "Invención de la Televisión",
+        description: "John Logie Baird realiza la primera demostración de TV.",
+        date: new Date(1926, 0, 26), // Mes 0 es Enero
+        category: "Tecnología",
+        location: "Londres, Reino Unido",
+        impact: "Transformación del entretenimiento y la información."
+    },
+    {
+        id: "event-109",
+        title: "Descubrimiento de la Electricidad",
+        description: "Benjamin Franklin demuestra la naturaleza eléctrica del rayo.",
+        date: new Date(1752, 5, 15), // Mes 5 es Junio
+        category: "Ciencia",
+        location: "Filadelfia, EE.UU.",
+        impact: "Fundamentos para el desarrollo de la era eléctrica."
+    },
+    {
+        id: "event-110",
+        title: "Invención de la Máquina de Vapor",
+        description: "James Watt mejora la máquina de vapor de Newcomen.",
+        date: new Date(1769, 0, 5), // Mes 0 es Enero
+        category: "Tecnología",
+        location: "Escocia",
+        impact: "Motor de la Revolución Industrial."
+    },
+    {
+        id: "event-111",
+        title: "Primer Ordenador Electrónico (ENIAC)",
+        description: "Se completa ENIAC, uno de los primeros ordenadores.",
+        date: new Date(1946, 1, 14), // Mes 1 es Febrero
+        category: "Tecnología",
+        location: "Filadelfia, EE.UU.",
+        impact: "Inicio de la era de la computación."
+    },
+    {
+        id: "event-112",
+        title: "Invención del Transistor",
+        description: "Bell Labs inventa el transistor.",
+        date: new Date(1947, 11, 23), // Mes 11 es Diciembre
+        category: "Tecnología",
+        location: "Nueva Jersey, EE.UU.",
+        impact: "Fundamento de toda la electrónica moderna."
+    },
+    {
+        id: "event-113",
+        title: "Lanzamiento del Primer Satélite Artificial",
+        description: "La URSS lanza el Sputnik 1.",
+        date: new Date(1957, 9, 4), // Mes 9 es Octubre
+        category: "Ciencia",
+        location: "Kazajistán, URSS",
+        impact: "Inicio de la era espacial y la carrera espacial."
+    },
+    {
+        id: "event-114",
+        title: "Invención del Láser",
+        description: "Theodore Maiman construye el primer láser funcional.",
+        date: new Date(1960, 4, 16), // Mes 4 es Mayo
+        category: "Tecnología",
+        location: "California, EE.UU.",
+        impact: "Aplicaciones en medicina, industria y comunicaciones."
+    },
+    {
+        id: "event-115",
+        title: "Primer Trasplante de Órgano Exitoso",
+        description: "Primer trasplante de riñón exitoso entre gemelos.",
+        date: new Date(1954, 11, 23), // Mes 11 es Diciembre
+        category: "Salud",
+        location: "Boston, EE.UU.",
+        impact: "Inicio de la medicina de trasplantes."
+    },
+    {
+        id: "event-116",
+        title: "Descubrimiento de la Vacuna contra la Polio",
+        description: "Jonas Salk desarrolla la primera vacuna contra la polio.",
+        date: new Date(1955, 3, 12), // Mes 3 es Abril
+        category: "Salud",
+        location: "Pittsburgh, EE.UU.",
+        impact: "Erradicación virtual de la poliomielitis."
+    },
+    {
+        id: "event-117",
+        title: "Invención del Microchip",
+        description: "Jack Kilby inventa el circuito integrado.",
+        date: new Date(1958, 8, 12), // Mes 8 es Septiembre
+        category: "Tecnología",
+        location: "Texas, EE.UU.",
+        impact: "Miniaturización de la electrónica y computación."
+    },
+    {
+        id: "event-118",
+        title: "Primer Vuelo Comercial",
+        description: "Primer vuelo comercial regular con pasajeros.",
+        date: new Date(1914, 0, 1), // Mes 0 es Enero
+        category: "Tecnología",
+        location: "Florida, EE.UU.",
+        impact: "Inicio de la aviación comercial."
+    },
+    {
+        id: "event-119",
+        title: "Invención de la Fotografía",
+        description: "Louis Daguerre perfecciona el proceso fotográfico.",
+        date: new Date(1839, 7, 19), // Mes 7 es Agosto
+        category: "Tecnología",
+        location: "París, Francia",
+        impact: "Revolución en el arte, periodismo y documentación."
+    },
+    {
+        id: "event-120",
+        title: "Descubrimiento de la Anestesia",
+        description: "Primera cirugía con anestesia general exitosa.",
+        date: new Date(1846, 9, 16), // Mes 9 es Octubre
+        category: "Salud",
+        location: "Boston, EE.UU.",
+        impact: "Revolución en la cirugía y medicina."
     }
-    // Puedes seguir añadiendo más eventos aquí si lo deseas
   ];
 
   // Filter events based on birth date (only include events after birth)

@@ -16,6 +16,53 @@ export const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ apiKey, provider, onApiK
   const [key, setKey] = React.useState(apiKey);
   const [selectedProvider, setSelectedProvider] = React.useState<AIProvider>(provider);
   const [showKey, setShowKey] = React.useState(false);
+  const [validationError, setValidationError] = React.useState<string>("");
+
+  // Update local state when props change
+  React.useEffect(() => {
+    setKey(apiKey);
+    setSelectedProvider(provider);
+  }, [apiKey, provider]);
+
+  // Validate API key when it changes or provider changes
+  React.useEffect(() => {
+    if (key && selectedProvider) {
+      validateApiKey(key, selectedProvider);
+    } else {
+      setValidationError("");
+    }
+  }, [key, selectedProvider]);
+
+  const validateApiKey = (apiKey: string, currentProvider: AIProvider) => {
+    // Get stored API keys for both providers
+    const openaiKey = localStorage.getItem("ai_api_key_openai");
+    const anthropicKey = localStorage.getItem("ai_api_key_anthropic");
+    
+    // Check if the key is being used by the other provider
+    if (currentProvider === 'openai' && anthropicKey === apiKey) {
+      setValidationError("Esta API key ya está siendo utilizada para Anthropic");
+      return false;
+    }
+    
+    if (currentProvider === 'anthropic' && openaiKey === apiKey) {
+      setValidationError("Esta API key ya está siendo utilizada para OpenAI");
+      return false;
+    }
+    
+    // Validate API key format
+    if (currentProvider === 'openai' && !apiKey.startsWith('sk-')) {
+      setValidationError("Las API keys de OpenAI deben comenzar con 'sk-'");
+      return false;
+    }
+    
+    if (currentProvider === 'anthropic' && !apiKey.startsWith('sk-ant-')) {
+      setValidationError("Las API keys de Anthropic deben comenzar con 'sk-ant-'");
+      return false;
+    }
+    
+    setValidationError("");
+    return true;
+  };
 
   const providers = [
     { key: 'openai', label: 'OpenAI', description: 'GPT-4o y otros modelos de OpenAI' },
@@ -23,6 +70,14 @@ export const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ apiKey, provider, onApiK
   ];
 
   const handleSave = () => {
+    if (!validateApiKey(key, selectedProvider)) {
+      return;
+    }
+    
+    // Save API key specific to the provider
+    localStorage.setItem(`ai_api_key_${selectedProvider}`, key);
+    localStorage.setItem("ai_provider", selectedProvider);
+    
     onApiKeyChange(key);
     onProviderChange(selectedProvider);
     onSave();
@@ -77,18 +132,18 @@ export const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ apiKey, provider, onApiK
                 <Select
                   label="Proveedor de IA"
                   placeholder="Selecciona un proveedor"
-                  selectedKeys={[selectedProvider]}
+                  selectedKeys={selectedProvider ? new Set([selectedProvider]) : new Set()}
                   onSelectionChange={(keys) => {
                     const selected = Array.from(keys)[0] as AIProvider;
                     setSelectedProvider(selected);
                   }}
                   className="mb-4"
                 >
-                  {providers.map((provider) => (
-                    <SelectItem key={provider.key}>
+                  {providers.map((providerOption) => (
+                    <SelectItem key={providerOption.key}>
                       <div className="flex flex-col">
-                        <span className="font-medium">{provider.label}</span>
-                        <span className="text-xs text-foreground-500">{provider.description}</span>
+                        <span className="font-medium">{providerOption.label}</span>
+                        <span className="text-xs text-foreground-500">{providerOption.description}</span>
                       </div>
                     </SelectItem>
                   ))}
@@ -100,6 +155,8 @@ export const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ apiKey, provider, onApiK
                   value={key}
                   onValueChange={setKey}
                   type={showKey ? "text" : "password"}
+                  isInvalid={!!validationError}
+                  errorMessage={validationError}
                   endContent={
                     <Button
                       isIconOnly
@@ -134,9 +191,11 @@ export const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ apiKey, provider, onApiK
                   color="primary" 
                   onPress={() => {
                     handleSave();
-                    onClose();
+                    if (!validationError) {
+                      onClose();
+                    }
                   }}
-                  isDisabled={!key}
+                  isDisabled={!key || !!validationError}
                 >
                   Guardar
                 </Button>

@@ -29,21 +29,41 @@ const App: React.FC = () => {
       setAiService(service);
       
       // Save API key and provider to localStorage
-      localStorage.setItem("ai_api_key", apiKey);
+      localStorage.setItem(`ai_api_key_${aiProvider}`, apiKey);
       localStorage.setItem("ai_provider", aiProvider);
     }
   }, [apiKey, aiProvider]);
 
-  // Load API key and provider from localStorage on mount
-  React.useEffect(() => {
-    const savedApiKey = localStorage.getItem("ai_api_key");
-    const savedProvider = localStorage.getItem("ai_provider") as AIProvider;
-    
+  const handleProviderChange = (provider: AIProvider) => {
+    setAiProvider(provider);
+    // Load the API key specific to the new provider
+    const savedApiKey = localStorage.getItem(`ai_api_key_${provider}`);
     if (savedApiKey) {
       setApiKey(savedApiKey);
+    } else {
+      setApiKey(""); // Clear API key if no key exists for this provider
     }
+  };
+
+  // Load API key and provider from localStorage on mount
+  React.useEffect(() => {
+    const savedProvider = localStorage.getItem("ai_provider") as AIProvider;
+    
     if (savedProvider && (savedProvider === 'openai' || savedProvider === 'anthropic')) {
       setAiProvider(savedProvider);
+      // Load the API key specific to the provider
+      const savedApiKey = localStorage.getItem(`ai_api_key_${savedProvider}`);
+      if (savedApiKey) {
+        setApiKey(savedApiKey);
+      }
+    } else {
+      // Set default provider if none is saved
+      setAiProvider('openai');
+      // Load OpenAI key as default
+      const savedApiKey = localStorage.getItem("ai_api_key_openai");
+      if (savedApiKey) {
+        setApiKey(savedApiKey);
+      }
     }
   }, []);
 
@@ -133,11 +153,18 @@ const App: React.FC = () => {
           Age Events AI
         </h1>
         <div className="flex items-center gap-2">
+          <div className="hidden md:flex flex-col items-end text-xs text-foreground-500 mr-2">
+            <span>Proveedor: {aiProvider === 'openai' ? 'OpenAI' : 'Anthropic'}</span>
+            <span>Modelo: {aiProvider === 'openai' ? 'GPT-4o-mini' : 'Claude 3.5 Sonnet'}</span>
+            <span className={apiKey ? 'text-green-600' : 'text-red-500'}>
+              {apiKey ? '✓ API Key configurada' : '⚠ API Key no configurada'}
+            </span>
+          </div>
           <ApiKeyForm 
             apiKey={apiKey}
             provider={aiProvider}
             onApiKeyChange={setApiKey}
-            onProviderChange={setAiProvider}
+            onProviderChange={handleProviderChange}
             onSave={() => {}}
           />
           <ThemeSwitcher />
